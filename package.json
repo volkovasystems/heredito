@@ -1,0 +1,23 @@
+{
+  "name": "heredito",
+  "version": "0.2.0",
+  "description": "Just a copy of NodeJS' util.inherits with polyfill.",
+  "main": "heredito.js",
+  "scripts": {
+    "test": "mocha heredito-test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/volkovasystems/heredito.git"
+  },
+  "keywords": [
+    "inheritance",
+    "util.inherits"
+  ],
+  "author": "Richeve S. Bebedor <richeve.bebedor@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/volkovasystems/heredito/issues"
+  },
+  "homepage": "https://github.com/volkovasystems/heredito#readme"
+}
