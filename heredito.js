@@ -42,11 +42,12 @@
 	@module-documentation:
 		This is just a copy of NodeJS' util.heredito method.
 
-		With further enhancements.
-
-		This is made for the client side use.
-
-		This will return the child class.
+		With additional enhancements.
+			1. Use parent instead of super reserved word for better usage.
+			2. Has backward compatibility.
+			3. A dummy class is inserted between child and parent.
+				3.1. Prototype properties can be shared even after declaration.
+				3.2. Prototype properties is overriden through dummy class.
 
 		Please refer to their documentation.
 		@link:https://nodejs.org/api/util.html#util_util_inherits_constructor_superconstructor
@@ -110,9 +111,7 @@ if( typeof Object.create != "function" ){
 }
 //: @end-submodule
 
-if( !( typeof window != "undefined" &&
-	"harden" in window ) )
-{
+if( typeof window == "undefined" ){
 	var harden = require( "harden" );
 }
 
@@ -123,6 +122,15 @@ if( typeof window != "undefined" &&
 }
 
 var heredito = function heredito( child, parent ){
+	/*:
+		@meta-configuration:
+			{
+				"child:required": "function",
+				"parent:required": "function"
+			}
+		@end-meta-configuration
+	*/
+
 	var dummy = function dummy( ){ };
 
 	dummy.prototype = Object.create( parent.prototype, {
@@ -136,8 +144,8 @@ var heredito = function heredito( child, parent ){
 
 	dummy.prototype.parent = parent;
 
-	for( var key in child.prototype ){
-		dummy.prototype[ key ] = child.prototype[ key ];
+	for( var property in child.prototype ){
+		dummy.prototype[ property ] = child.prototype[ property ];
 	}
 
 	child.prototype = Object.create( dummy.prototype, {
