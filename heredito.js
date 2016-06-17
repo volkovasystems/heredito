@@ -28,14 +28,14 @@
 
 	@module-configuration:
 		{
-			"packageName": "heredito",
-			"fileName": "heredito.js",
-			"moduleName": "heredito",
-			"authorName": "Richeve S. Bebedor",
-			"authorEMail": "richeve.bebedor@gmail.com",
+			"package": "heredito",
+			"file": "heredito.js",
+			"module": "heredito",
+			"author": "Richeve S. Bebedor",
+			"eMail": "richeve.bebedor@gmail.com",
 			"repository": "git@github.com:volkovasystems/heredito.git",
-			"testCase": "heredito-test.js",
-			"isGlobal": true
+			"test": "heredito-test.js",
+			"global": true
 		}
 	@end-module-configuration
 
@@ -143,9 +143,12 @@ var heredito = function heredito( child, parent ){
 	} );
 
 	dummy.prototype.parent = parent;
+	dummy.prototype[ "parent" + parent.constructor.name ] = parent;
 
 	for( var property in child.prototype ){
-		dummy.prototype[ property ] = child.prototype[ property ];
+		if( property != "parent" ){
+			dummy.prototype[ property ] = child.prototype[ property ];
+		}
 	}
 
 	child.prototype = Object.create( dummy.prototype, {
@@ -162,12 +165,4 @@ var heredito = function heredito( child, parent ){
 
 if( typeof module != "undefined" ){
 	module.exports = heredito;
-}
-
-if( typeof global != "undefined" ){
-	harden
-		.bind( heredito )( "globalize",
-			function globalize( ){
-				harden( "heredito", heredito, global );
-			} );
 }
