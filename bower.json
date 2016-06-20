@@ -1,7 +1,7 @@
 {
   "name": "heredito",
   "main": "heredito.js",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "homepage": "https://github.com/volkovasystems/heredito",
   "authors": [
     "Richeve S. Bebedor <richeve.bebedor@gmail.com>"

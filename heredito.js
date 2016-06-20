@@ -185,7 +185,12 @@ var heredito = function heredito( child, parent ){
 		if( _level > 1 ){
 			var _parent = parent;
 			for( var index = 1; index <= _level; index++ ){
-				_parent = _parent.prototype.parent;
+				if( _parent.prototype.parent ){
+					_parent = _parent.prototype.parent;
+
+				}else{
+					throw new Error( "level overflow" );
+				}
 			}
 
 			parent = _parent;
