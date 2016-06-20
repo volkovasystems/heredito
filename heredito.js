@@ -29,6 +29,7 @@
 	@module-configuration:
 		{
 			"package": "heredito",
+			"path": "heredito/heredito.js",
 			"file": "heredito.js",
 			"module": "heredito",
 			"author": "Richeve S. Bebedor",
@@ -55,7 +56,8 @@
 
 	@include:
 		{
-			"harden": "harden"
+			"harden": "harden",
+			"raze": "raze"
 		}
 	@end-include
 */
@@ -113,12 +115,21 @@ if( typeof Object.create != "function" ){
 
 if( typeof window == "undefined" ){
 	var harden = require( "harden" );
+	var raze = require( "raze" );
+
+	global.raze = raze;
 }
 
 if( typeof window != "undefined" &&
 	!( "harden" in window ) )
 {
 	throw new Error( "harden is not defined" );
+}
+
+if( typeof window != "undefined" &&
+	!( "raze" in window ) )
+{
+	throw new Error( "raze is not defined" );
 }
 
 var heredito = function heredito( child, parent ){
@@ -159,6 +170,45 @@ var heredito = function heredito( child, parent ){
 			"configurable": true
 		}
 	} );
+
+	child.prototype.level = function level( _level ){
+		var parent = this.parent;
+
+		if( _level < 0 ){
+			throw new Error( "invalid level" );
+		}
+
+		if( _level == 0 ){
+			return this;
+		}
+
+		if( _level > 1 ){
+			var _parent = parent;
+			for( var index = 1; index <= _level; index++ ){
+				_parent = _parent.prototype.parent;
+			}
+
+			parent = _parent;
+		}
+
+		var scope = { };
+
+		for( method in parent ){
+			if( typeof method == "function" ){
+				scope[ method ] = ( function delegate( ){
+					var result = parent[ method ].apply( this, raze( arguments ) );
+
+					if( result !== this ){
+						return result;
+					}
+
+					return this;
+				} ).bind( this );
+			}
+		}
+
+		return scope;
+	};
 
 	return child;
 };
