@@ -144,6 +144,13 @@ var heredito = function heredito( child, parent ){
 
 	var dummy = function dummy( ){ };
 
+	var _scope = { };
+	for( var method in parent.prototype ){
+		if( typeof parent.prototype[ method ] == "function" ){
+			_scope[ method ] = parent.prototype[ method ];
+		}
+	}
+
 	dummy.prototype = Object.create( parent.prototype, {
 		"constructor": {
 			"value": dummy,
@@ -172,7 +179,7 @@ var heredito = function heredito( child, parent ){
 	} );
 
 	child.prototype.level = function level( _level ){
-		var parent = this.parent;
+		var parent = { "prototype": _scope };
 
 		if( _level < 0 ){
 			throw new Error( "invalid level" );
@@ -198,10 +205,10 @@ var heredito = function heredito( child, parent ){
 
 		var scope = { };
 
-		for( method in parent ){
-			if( typeof method == "function" ){
-				scope[ method ] = ( function delegate( ){
-					var result = parent[ method ].apply( this, raze( arguments ) );
+		for( method in parent.prototype ){
+			if( typeof parent.prototype[ method ] == "function" ){
+				var delegate = ( function delegate( ){
+					var result = parent.prototype[ method ].apply( this, raze( arguments ) );
 
 					if( result !== this ){
 						return result;
@@ -209,6 +216,8 @@ var heredito = function heredito( child, parent ){
 
 					return this;
 				} ).bind( this );
+
+				scope[ method ] = delegate;
 			}
 		}
 
