@@ -183,13 +183,11 @@ var heredito = function heredito( child, parent ){
 
 		if( _level < 0 ){
 			throw new Error( "invalid level" );
-		}
 
-		if( _level == 0 ){
+		}else if( _level == 0 ){
 			return this;
-		}
 
-		if( _level > 1 ){
+		}else{
 			var _parent = parent;
 			for( var index = 1; index <= _level; index++ ){
 				if( _parent.prototype.parent ){
