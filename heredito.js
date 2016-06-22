@@ -204,9 +204,11 @@ var heredito = function heredito( child, parent ){
 		var scope = { };
 
 		for( method in parent.prototype ){
-			if( typeof parent.prototype[ method ] == "function" ){
-				var delegate = ( function delegate( ){
-					var result = parent.prototype[ method ].apply( this, raze( arguments ) );
+			var procedure = parent.prototype[ method ];
+
+			if( typeof procedure == "function" ){
+				var delegate = ( function( ){
+					var result = procedure.apply( this, raze( arguments ) );
 
 					if( result !== this ){
 						return result;
@@ -214,6 +216,8 @@ var heredito = function heredito( child, parent ){
 
 					return this;
 				} ).bind( this );
+
+				delegate.name = method;
 
 				scope[ method ] = delegate;
 			}
