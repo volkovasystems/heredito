@@ -142,34 +142,47 @@ var heredito = function heredito( child, parent ){
 		@end-meta-configuration
 	*/
 
-	var dummy = function dummy( ){ };
-
-	var _scope = { };
-	for( var method in parent.prototype ){
-		if( typeof parent.prototype[ method ] == "function" ){
-			_scope[ method ] = parent.prototype[ method ];
-		}
+	if( typeof child.prototype != "object" ){
+		throw new Error( "child must have a prototype" );
 	}
 
-	dummy.prototype = Object.create( parent.prototype, {
+	if( typeof parent.prototype != "object" ){
+		throw new Error( "parent must have a prototype" );
+	}
+
+	var connector = function connector( ){ };
+	Object.defineProperty( connector, "name", { "value": child.name } );
+
+	connector.prototype = Object.create( parent.prototype, {
 		"constructor": {
-			"value": dummy,
+			"value": connector,
 			"enumerable": false,
 			"writable": true,
 			"configurable": true
 		}
 	} );
 
-	dummy.prototype.parent = parent;
-	dummy.prototype[ "parent" + parent.constructor.name ] = parent;
+	connector.prototype.parent = parent;
 
-	for( var property in child.prototype ){
-		if( property != "parent" ){
-			dummy.prototype[ property ] = child.prototype[ property ];
+	var transferredProperty = Object.getOwnPropertyNames( parent.prototype );;
+
+	var childProperty = Object.getOwnPropertyNames( child.prototype );
+	var childPropertyLength = childProperty.length;
+
+	for( var index = 0; index < childPropertyLength; index++ ){
+		var property = childProperty[ index ];
+
+		if( property != "constructor" &&
+			property != "parent" &&
+			child.prototype.hasOwnProperty( property ) )
+		{
+			connector.prototype[ property ] = child.prototype[ property ];
+
+			transferredProperty.push( property );
 		}
 	}
 
-	child.prototype = Object.create( dummy.prototype, {
+	child.prototype = Object.create( connector.prototype, {
 		"constructor": {
 			"value": child,
 			"enumerable": false,
@@ -178,46 +191,57 @@ var heredito = function heredito( child, parent ){
 		}
 	} );
 
-	child.prototype.level = function level( _level ){
-		var parent = { "prototype": _scope };
+	var transferredPropertyLength = transferredProperty.length;
+	for( var index = 0; index < transferredPropertyLength; index++ ){
+		var property = transferredProperty[ index ];
 
-		if( _level < 0 ){
+		child.prototype[ property ] = connector.prototype[ property ];
+	}
+
+	child.prototype.level = function level( depth ){
+		var ancestor = parent;
+
+		if( depth < 0 ){
 			throw new Error( "invalid level" );
 
-		}else if( _level == 0 ){
+		}else if( depth == 0 ){
 			return this;
 
 		}else{
-			var _parent = parent;
-			for( var index = 1; index <= _level; index++ ){
-				if( _parent.prototype.parent ){
-					_parent = _parent.prototype.parent;
+			for( var index = 1; index < depth; index++ ){
+				if( ancestor.prototype.parent ){
+					ancestor = ancestor.prototype.parent;
 
 				}else{
 					throw new Error( "level overflow" );
 				}
 			}
-
-			parent = _parent;
 		}
 
 		var scope = { };
+		var ancestorProperty = Object.getOwnPropertyNames( ancestor.prototype );
+		var ancestorPropertyLength = ancestorProperty.length;
+		for( var index = 0; index < ancestorPropertyLength; index++ ){
+			var method = ancestorProperty[ index ];
 
-		for( method in parent.prototype ){
-			var procedure = parent.prototype[ method ];
+			if( method != "constructor" &&
+				method != "parent" &&
+				method != "level" &&
+				typeof ancestor.prototype[ method ] == "function" )
+			{
+				var procedure = ancestor.prototype[ method ];
 
-			if( typeof procedure == "function" ){
-				var delegate = ( function( ){
-					var result = procedure.apply( this, raze( arguments ) );
+				var delegate = ( function delegate( ){
+					var result = this.procedure.apply( this.self, raze( arguments ) );
 
-					if( result !== this ){
+					if( result !== this.self ){
 						return result;
 					}
 
-					return this;
-				} ).bind( this );
+					return this.self;
+				} ).bind( { "self": this, "procedure": procedure } );
 
-				delegate.name = method;
+				Object.defineProperty( delegate, "name", { "value": method } );
 
 				scope[ method ] = delegate;
 			}
