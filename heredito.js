@@ -41,7 +41,7 @@
 	@end-module-configuration
 
 	@module-documentation:
-		This is just a copy of NodeJS' util.heredito method.
+		This is just a copy of NodeJS util.heredito method.
 
 		With additional enhancements.
 			1. Use parent instead of super reserved word for better usage.
@@ -132,6 +132,9 @@ if( typeof window != "undefined" &&
 	throw new Error( "raze is not defined" );
 }
 
+harden( "DELEGATE_INSTANCE", "delegate-instance" );
+harden( "DELEGATE_CLASS", "delegate-class" );
+
 var heredito = function heredito( child, parent ){
 	/*:
 		@meta-configuration:
@@ -200,6 +203,40 @@ var heredito = function heredito( child, parent ){
 
 	child.prototype.level = function level( depth ){
 		var ancestor = parent;
+
+		/*:
+			This will measure the complexity of the delegated class hierarchy.
+		*/
+		var delegateLevel = 0;
+		var _depth = -1;
+		if( this.constructor.DELEGATE_CLASS == DELEGATE_CLASS ){
+			delegateLevel++;
+
+			var _ancestor = ancestor;
+			while( _ancestor.prototype.parent ||
+				_depth != depth )
+			{
+				if( _ancestor.DELEGATE_CLASS == DELEGATE_CLASS ){
+					delegateLevel++;
+
+				}else{
+					_depth++;
+				}
+
+				_ancestor = _ancestor.prototype.parent;
+			}
+		}
+
+		/*:
+			If the class instance is used as a delegate instance
+				then they should have similar levels.
+		*/
+		if( this.DELEGATE_INSTANCE == DELEGATE_INSTANCE &&
+			this.name == this.parent.name &&
+			delegateLevel )
+		{
+			depth += delegateLevel;
+		}
 
 		if( depth < 0 ){
 			throw new Error( "invalid level" );
