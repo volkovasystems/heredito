@@ -1,6 +1,6 @@
 "use strict";
 
-/*:
+/*;
 	@module-license:
 		The MIT License (MIT)
 
@@ -63,7 +63,7 @@
 */
 
 //: @submodule:
-/*:
+/*;
 	This is taken from
 	https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Object/create
 	I just modified the code formats to my liking.
@@ -116,8 +116,6 @@ if( typeof Object.create != "function" ){
 if( typeof window == "undefined" ){
 	var harden = require( "harden" );
 	var raze = require( "raze" );
-
-	global.raze = raze;
 }
 
 if( typeof window != "undefined" &&
@@ -131,9 +129,6 @@ if( typeof window != "undefined" &&
 {
 	throw new Error( "raze is not defined" );
 }
-
-harden( "DELEGATE_INSTANCE", "delegate-instance" );
-harden( "DELEGATE_CLASS", "delegate-class" );
 
 var heredito = function heredito( child, parent ){
 	/*:
@@ -203,40 +198,6 @@ var heredito = function heredito( child, parent ){
 
 	child.prototype.level = function level( depth ){
 		var ancestor = parent;
-
-		/*:
-			This will measure the complexity of the delegated class hierarchy.
-		*/
-		var delegateLevel = 0;
-		var _depth = -1;
-		if( this.constructor.DELEGATE_CLASS == DELEGATE_CLASS ){
-			delegateLevel++;
-
-			var _ancestor = ancestor;
-			while( _ancestor.prototype.parent ||
-				_depth != depth )
-			{
-				if( _ancestor.DELEGATE_CLASS == DELEGATE_CLASS ){
-					delegateLevel++;
-
-				}else{
-					_depth++;
-				}
-
-				_ancestor = _ancestor.prototype.parent;
-			}
-		}
-
-		/*:
-			If the class instance is used as a delegate instance
-				then they should have similar levels.
-		*/
-		if( this.DELEGATE_INSTANCE == DELEGATE_INSTANCE &&
-			this.name == this.parent.name &&
-			delegateLevel )
-		{
-			depth += delegateLevel;
-		}
 
 		if( depth < 0 ){
 			throw new Error( "invalid level" );
