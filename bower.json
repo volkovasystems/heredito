@@ -1,6 +1,6 @@
 {
   "name": "heredito",
-  "version": "0.6.1",
+  "version": "0.7.0",
   "main": "heredito.js",
   "homepage": "https://github.com/volkovasystems/heredito",
   "authors": [
@@ -13,7 +13,9 @@
   ],
   "keywords": [
     "inheritance",
-    "util.inherits"
+    "util.inherits",
+	"inherit",
+	"heredito"
   ],
   "license": "MIT",
   "ignore": [
@@ -25,6 +27,7 @@
   ],
   "dependencies": {
     "harden": "^0.3.5",
-    "raze": "^0.0.8"
+    "raze": "^0.0.8",
+    "ate": "^0.0.0"
   }
 }

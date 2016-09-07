@@ -47,7 +47,7 @@
 			1. Use parent instead of super reserved word for better usage.
 			2. Has backward compatibility.
 			3. A dummy class is inserted between child and parent.
-				3.1. Prototype properties can be shared even after declaration.
+				3.1. Prototype properties can be shared even before declaration.
 				3.2. Prototype properties is overriden through dummy class.
 
 		Please refer to their documentation.
@@ -56,6 +56,7 @@
 
 	@include:
 		{
+			"ate": "ate",
 			"harden": "harden",
 			"raze": "raze"
 		}
@@ -114,8 +115,15 @@ if( typeof Object.create != "function" ){
 //: @end-submodule
 
 if( typeof window == "undefined" ){
+	var ate = require( "ate" );
 	var harden = require( "harden" );
 	var raze = require( "raze" );
+}
+
+if( typeof window != "undefined" &&
+	!( "ate" in window ) )
+{
+	throw new Error( "ate is not defined" );
 }
 
 if( typeof window != "undefined" &&
@@ -131,7 +139,7 @@ if( typeof window != "undefined" &&
 }
 
 var heredito = function heredito( child, parent ){
-	/*:
+	/*;
 		@meta-configuration:
 			{
 				"child:required": "function",
@@ -149,7 +157,7 @@ var heredito = function heredito( child, parent ){
 	}
 
 	var connector = function connector( ){ };
-	Object.defineProperty( connector, "name", { "value": child.name } );
+	ate( "name", child.name, connector );
 
 	connector.prototype = Object.create( parent.prototype, {
 		"constructor": {
@@ -196,6 +204,56 @@ var heredito = function heredito( child, parent ){
 		child.prototype[ property ] = connector.prototype[ property ];
 	}
 
+	child.prototype.root = function root( depth ){
+		var ancestor = [ ];
+
+		var parent = this.prototype.parent;
+		while( parent ){
+			ancestor.push( parent );
+
+			parent = parent.prototype.parent;
+		}
+
+		if( depth >= ancestor.length ||
+			depth < 0 )
+		{
+			throw new Error( "invalid index" );
+		}
+
+		ancestor = ancestor.reverse( )[ depth ];
+
+		var scope = { };
+		var ancestorProperty = Object.getOwnPropertyNames( ancestor.prototype );
+		var ancestorPropertyLength = ancestorProperty.length;
+		for( var index = 0; index < ancestorPropertyLength; index++ ){
+			var method = ancestorProperty[ index ];
+
+			if( method != "constructor" &&
+				method != "parent" &&
+				method != "level" &&
+				typeof ancestor.prototype[ method ] == "function" )
+			{
+				var procedure = ancestor.prototype[ method ];
+
+				var delegate = ( function delegate( ){
+					var result = this.procedure.apply( this.self, raze( arguments ) );
+
+					if( result !== this.self ){
+						return result;
+					}
+
+					return this.self;
+				} ).bind( { "self": this, "procedure": procedure } );
+
+				ate( "name", method, delegate );
+
+				scope[ method ] = delegate;
+			}
+		}
+
+		return scope;
+	};
+
 	child.prototype.level = function level( depth ){
 		var ancestor = parent;
 
@@ -239,7 +297,7 @@ var heredito = function heredito( child, parent ){
 					return this.self;
 				} ).bind( { "self": this, "procedure": procedure } );
 
-				Object.defineProperty( delegate, "name", { "value": method } );
+				ate( "name", method, delegate );
 
 				scope[ method ] = delegate;
 			}
