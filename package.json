@@ -1,6 +1,6 @@
 {
   "name": "heredito",
-  "version": "0.7.4",
+  "version": "0.7.5",
   "description": "Just a copy of NodeJS' util.inherits with polyfill.",
   "main": "heredito.js",
   "scripts": {
@@ -13,8 +13,8 @@
   "keywords": [
     "inheritance",
     "util.inherits",
-	"inherit",
-	"heredito"
+    "inherit",
+    "heredito"
   ],
   "author": "Richeve S. Bebedor <richeve.bebedor@gmail.com>",
   "license": "MIT",
@@ -25,6 +25,7 @@
   "dependencies": {
     "ate": "0.0.0",
     "harden": "^0.3.5",
-    "raze": "0.0.8"
+    "raze": "0.0.8",
+    "snapd": "0.0.5"
   }
 }

@@ -58,7 +58,8 @@
 		{
 			"ate": "ate",
 			"harden": "harden",
-			"raze": "raze"
+			"raze": "raze",
+			"snapd": "snapd"
 		}
 	@end-include
 */
@@ -118,6 +119,7 @@ if( typeof window == "undefined" ){
 	var ate = require( "ate" );
 	var harden = require( "harden" );
 	var raze = require( "raze" );
+	var snapd = require( "snapd" );
 }
 
 if( typeof window != "undefined" &&
@@ -138,6 +140,12 @@ if( typeof window != "undefined" &&
 	throw new Error( "raze is not defined" );
 }
 
+if( typeof window != "undefined" &&
+	!( "snapd" in window ) )
+{
+	throw new Error( "snapd is not defined" );
+}
+
 var heredito = function heredito( child, parent ){
 	/*;
 		@meta-configuration:
@@ -156,65 +164,55 @@ var heredito = function heredito( child, parent ){
 		throw new Error( "parent must have a prototype" );
 	}
 
-	var connector = function connector( ){ };
-	ate( "name", child.name, connector );
+	snapd( function delay( ){
+		var connector = function connector( ){ };
+		ate( "name", child.name, connector );
 
-	connector.prototype = Object.create( parent.prototype, {
-		"constructor": {
-			"value": connector,
-			"enumerable": false,
-			"writable": true,
-			"configurable": true
+		connector.prototype = Object.create( parent.prototype, {
+			"constructor": {
+				"value": connector,
+				"enumerable": false,
+				"writable": true,
+				"configurable": true
+			}
+		} );
+
+		connector.prototype.parent = parent;
+
+		var transferredProperty = Object.getOwnPropertyNames( parent.prototype );;
+
+		var childProperty = Object.getOwnPropertyNames( child.prototype );
+		var childPropertyLength = childProperty.length;
+
+		for( var index = 0; index < childPropertyLength; index++ ){
+			var property = childProperty[ index ];
+
+			if( property != "constructor" &&
+				property != "parent" &&
+				child.prototype.hasOwnProperty( property ) )
+			{
+				connector.prototype[ property ] = child.prototype[ property ];
+
+				transferredProperty.push( property );
+			}
+		}
+
+		child.prototype = Object.create( connector.prototype, {
+			"constructor": {
+				"value": child,
+				"enumerable": false,
+				"writable": true,
+				"configurable": true
+			}
+		} );
+
+		var transferredPropertyLength = transferredProperty.length;
+		for( var index = 0; index < transferredPropertyLength; index++ ){
+			var property = transferredProperty[ index ];
+
+			child.prototype[ property ] = connector.prototype[ property ];
 		}
 	} );
-
-	connector.prototype.parent = parent;
-
-	connector.prototype.initialize = function initialize( ){
-		if( parent &&
-			parent.prototype &&
-			parent.prototype.initialize &&
-			typeof parent.prototype.initialize == "function" )
-		{
-			return parent.prototype.initialize.apply( this, raze( arguments ) );
-		}
-
-		return this;
-	};
-
-	var transferredProperty = Object.getOwnPropertyNames( parent.prototype );;
-
-	var childProperty = Object.getOwnPropertyNames( child.prototype );
-	var childPropertyLength = childProperty.length;
-
-	for( var index = 0; index < childPropertyLength; index++ ){
-		var property = childProperty[ index ];
-
-		if( property != "constructor" &&
-			property != "parent" &&
-			child.prototype.hasOwnProperty( property ) )
-		{
-			connector.prototype[ property ] = child.prototype[ property ];
-
-			transferredProperty.push( property );
-		}
-	}
-
-	child.prototype = Object.create( connector.prototype, {
-		"constructor": {
-			"value": child,
-			"enumerable": false,
-			"writable": true,
-			"configurable": true
-		}
-	} );
-
-	var transferredPropertyLength = transferredProperty.length;
-	for( var index = 0; index < transferredPropertyLength; index++ ){
-		var property = transferredProperty[ index ];
-
-		child.prototype[ property ] = connector.prototype[ property ];
-	}
 
 	child.prototype.root = function root( depth ){
 		var ancestor = [ ];
