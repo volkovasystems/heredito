@@ -207,7 +207,7 @@ var heredito = function heredito( child, parent ){
 	child.prototype.root = function root( depth ){
 		var ancestor = [ ];
 
-		var parent = this.prototype.parent;
+		var parent = this.constructor.prototype.parent;
 		while( parent ){
 			ancestor.push( parent );
 
