@@ -168,8 +168,6 @@ var heredito = function heredito( child, parent ){
 		}
 	} );
 
-	connector.prototype.parent = parent;
-
 	var transferredProperty = Object.getOwnPropertyNames( parent.prototype );;
 
 	var childProperty = Object.getOwnPropertyNames( child.prototype );
@@ -203,6 +201,9 @@ var heredito = function heredito( child, parent ){
 
 		child.prototype[ property ] = connector.prototype[ property ];
 	}
+
+	//: Reconnect the parent properly.
+	harden( "parent", parent, child.prototype );
 
 	child.prototype.root = function root( depth ){
 		var ancestor = [ ];
