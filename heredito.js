@@ -199,7 +199,13 @@ var heredito = function heredito( child, parent ){
 	for( var index = 0; index < transferredPropertyLength; index++ ){
 		var property = transferredProperty[ index ];
 
-		child.prototype[ property ] = connector.prototype[ property ];
+		var descriptor = Object.getOwnPropertyDescriptor( child.prototype, property );
+		descriptor = descriptor || { };
+		if( !descriptor.writable ||
+			descriptor.writable === true )
+		{
+			child.prototype[ property ] = connector.prototype[ property ];
+		}
 	}
 
 	//: Reconnect the parent properly.
