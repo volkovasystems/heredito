@@ -168,6 +168,20 @@ var heredito = function heredito( child, parent ){
 		}
 	} );
 
+	connector.prototype.parent = parent;
+
+	connector.prototype.initialize = function initialize( ){
+		if( parent &&
+			parent.prototype &&
+			parent.prototype.initialize &&
+			typeof parent.prototype.initialize == "function" )
+		{
+			return parent.prototype.initialize.apply( this, raze( arguments ) );
+		}
+
+		return this;
+	};
+
 	var transferredProperty = Object.getOwnPropertyNames( parent.prototype );;
 
 	var childProperty = Object.getOwnPropertyNames( child.prototype );
@@ -199,17 +213,8 @@ var heredito = function heredito( child, parent ){
 	for( var index = 0; index < transferredPropertyLength; index++ ){
 		var property = transferredProperty[ index ];
 
-		var descriptor = Object.getOwnPropertyDescriptor( child.prototype, property );
-		descriptor = descriptor || { };
-		if( !descriptor.writable ||
-			descriptor.writable === true )
-		{
-			child.prototype[ property ] = connector.prototype[ property ];
-		}
+		child.prototype[ property ] = connector.prototype[ property ];
 	}
-
-	//: Reconnect the parent properly.
-	harden( "parent", parent, child.prototype );
 
 	child.prototype.root = function root( depth ){
 		var ancestor = [ ];
