@@ -58,8 +58,7 @@
 		{
 			"ate": "ate",
 			"harden": "harden",
-			"raze": "raze",
-			"snapd": "snapd"
+			"raze": "raze"
 		}
 	@end-include
 */
@@ -119,7 +118,6 @@ if( typeof window == "undefined" ){
 	var ate = require( "ate" );
 	var harden = require( "harden" );
 	var raze = require( "raze" );
-	var snapd = require( "snapd" );
 }
 
 if( typeof window != "undefined" &&
@@ -140,12 +138,6 @@ if( typeof window != "undefined" &&
 	throw new Error( "raze is not defined" );
 }
 
-if( typeof window != "undefined" &&
-	!( "snapd" in window ) )
-{
-	throw new Error( "snapd is not defined" );
-}
-
 var heredito = function heredito( child, parent ){
 	/*;
 		@meta-configuration:
@@ -156,6 +148,14 @@ var heredito = function heredito( child, parent ){
 		@end-meta-configuration
 	*/
 
+	if( typeof child != "function" ){
+		throw new Error( "invalid child" );
+	}
+
+	if( typeof parent != "function" ){
+		throw new Error( "invalid parent" );
+	}
+
 	if( typeof child.prototype != "object" ){
 		throw new Error( "child must have a prototype" );
 	}
@@ -164,35 +164,35 @@ var heredito = function heredito( child, parent ){
 		throw new Error( "parent must have a prototype" );
 	}
 
-	var connector = function connector( ){ };
+	let connector = function connector( ){ };
+	//: Rename the connector to make it look like the child.
 	ate( "name", child.name, connector );
 
+	//: Inherit the parent.
 	connector.prototype = Object.create( parent.prototype, {
 		"constructor": {
-			"value": connector,
+			"value": parent,
 			"enumerable": false,
 			"writable": true,
-			"configurable": true
+			"configurable": false
 		}
 	} );
 
+	//: Attach the parent to the connector.
 	connector.prototype.parent = parent;
 
-	var transferredProperty = Object.getOwnPropertyNames( parent.prototype );;
+	let childCache = { };
+	let childProperty = Object.getOwnPropertyNames( child.prototype );
+	let childPropertyLength = childProperty.length;
+	for( let index = 0; index < childPropertyLength; index++ ){
+		let property = childProperty[ index ];
 
-	var childProperty = Object.getOwnPropertyNames( child.prototype );
-	var childPropertyLength = childProperty.length;
-
-	for( var index = 0; index < childPropertyLength; index++ ){
-		var property = childProperty[ index ];
-
-		if( property != "constructor" &&
-			property != "parent" &&
-			child.prototype.hasOwnProperty( property ) )
-		{
-			connector.prototype[ property ] = child.prototype[ property ];
-
-			transferredProperty.push( property );
+		if( child.prototype.hasOwnProperty( property ) ){
+			/*;
+				We need to do this because
+					we don't want to override the child prototype.
+			*/
+			childCache[ property ] = child.prototype[ property ];
 		}
 	}
 
@@ -201,69 +201,62 @@ var heredito = function heredito( child, parent ){
 			"value": child,
 			"enumerable": false,
 			"writable": true,
-			"configurable": true
+			"configurable": false
 		}
 	} );
 
-	var transferredPropertyLength = transferredProperty.length;
-	for( var index = 0; index < transferredPropertyLength; index++ ){
-		var property = transferredProperty[ index ];
-
-		child.prototype[ property ] = connector.prototype[ property ];
+	//: Transfer the cached properties back to the child.
+	for( let property in childCache ){
+		child.prototype[ property ] = childCache[ property ];
 	}
 
 	child.prototype.root = function root( depth ){
-		var ancestor = [ ];
+		let ancestor = [ ];
 
-		var parent = this.constructor.prototype.parent;
+		let parent = this.constructor.prototype.parent;
 		while( parent ){
 			ancestor.push( parent );
 
 			parent = parent.prototype.parent;
 		}
 
-		if( depth >= ancestor.length ||
-			depth < 0 )
-		{
-			throw new Error( "invalid index" );
+		if( depth >= ancestor.length || depth < 0 ){
+			throw new Error( "root overflow" );
 		}
 
 		ancestor = ancestor.reverse( )[ depth ];
 
-		var scope = { };
-		var ancestorProperty = Object.getOwnPropertyNames( ancestor.prototype );
-		var ancestorPropertyLength = ancestorProperty.length;
-		for( var index = 0; index < ancestorPropertyLength; index++ ){
-			var method = ancestorProperty[ index ];
-
+		let scope = { };
+		let ancestorProperty = Object.getOwnPropertyNames( ancestor.prototype );
+		ancestorProperty.forEach( ( function onEachProperty( method ){
 			if( method != "constructor" &&
 				method != "parent" &&
 				method != "level" &&
 				typeof ancestor.prototype[ method ] == "function" )
 			{
-				var procedure = ancestor.prototype[ method ];
+				let procedure = ancestor.prototype[ method ];
 
-				var delegate = ( function delegate( ){
-					var result = this.procedure.apply( this.self, raze( arguments ) );
+				let delegate = ( function delegate( ){
+					let result = procedure.apply( this, raze( arguments ) );
 
-					if( result !== this.self ){
+					if( result !== this ){
 						return result;
 					}
 
-					return this.self;
-				} ).bind( { "self": this, "procedure": procedure } );
+					return this;
+				} ).bind( this );
 
 				ate( "name", method, delegate );
 
 				scope[ method ] = delegate;
 			}
-		}
+		} ).bind( this ) );
 
 		return scope;
 	};
 
 	child.prototype.level = function level( depth ){
-		var ancestor = parent;
+		let ancestor = parent;
 
 		if( depth < 0 ){
 			throw new Error( "invalid level" );
@@ -272,7 +265,7 @@ var heredito = function heredito( child, parent ){
 			return this;
 
 		}else{
-			for( var index = 1; index < depth; index++ ){
+			for( let index = 1; index < depth; index++ ){
 				if( ancestor.prototype.parent ){
 					ancestor = ancestor.prototype.parent;
 
@@ -282,34 +275,31 @@ var heredito = function heredito( child, parent ){
 			}
 		}
 
-		var scope = { };
-		var ancestorProperty = Object.getOwnPropertyNames( ancestor.prototype );
-		var ancestorPropertyLength = ancestorProperty.length;
-		for( var index = 0; index < ancestorPropertyLength; index++ ){
-			var method = ancestorProperty[ index ];
-
+		let scope = { };
+		let ancestorProperty = Object.getOwnPropertyNames( ancestor.prototype );
+		ancestorProperty.forEach( ( function onEachProperty( method ){
 			if( method != "constructor" &&
 				method != "parent" &&
 				method != "level" &&
 				typeof ancestor.prototype[ method ] == "function" )
 			{
-				var procedure = ancestor.prototype[ method ];
+				let procedure = ancestor.prototype[ method ];
 
-				var delegate = ( function delegate( ){
-					var result = this.procedure.apply( this.self, raze( arguments ) );
+				let delegate = ( function delegate( ){
+					let result = procedure.apply( this, raze( arguments ) );
 
-					if( result !== this.self ){
+					if( result !== this ){
 						return result;
 					}
 
-					return this.self;
-				} ).bind( { "self": this, "procedure": procedure } );
+					return this;
+				} ).bind( this );
 
 				ate( "name", method, delegate );
 
 				scope[ method ] = delegate;
 			}
-		}
+		} ).bind( this ) );
 
 		return scope;
 	};
