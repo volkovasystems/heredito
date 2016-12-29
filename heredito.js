@@ -33,6 +33,9 @@
 			"file": "heredito.js",
 			"module": "heredito",
 			"author": "Richeve S. Bebedor",
+			"contributors": [
+				"John Lenon Maghanoy <johnlenonmaghanoy@gmail.com>"
+			],
 			"eMail": "richeve.bebedor@gmail.com",
 			"repository": "git@github.com:volkovasystems/heredito.git",
 			"test": "heredito-test.js",
@@ -58,6 +61,7 @@
 		{
 			"ate": "ate",
 			"harden": "harden",
+			"protype": "protype",
 			"raze": "raze"
 		}
 	@end-include
@@ -77,7 +81,7 @@ if( typeof Object.create != "function" ){
 		function Temp( ) { }
 
 		// make a safe reference to Object.prototype.hasOwnProperty
-		var hasOwn = Object.prototype.hasOwnProperty;
+		let hasOwn = Object.prototype.hasOwnProperty;
 
 		return function module( O ){
 			// 1. If Type(O) is not Object or Null throw a TypeError exception.
@@ -90,7 +94,7 @@ if( typeof Object.create != "function" ){
 			//    constructor with that name
 			// 3. Set the [[Prototype]] internal property of obj to O.
 			Temp.prototype = O;
-			var obj = new Temp( );
+			let obj = new Temp( );
 			Temp.prototype = null; // Let's not keep a stray reference to O...
 
 			// 4. If the argument Properties is present and not undefined, add
@@ -99,8 +103,8 @@ if( typeof Object.create != "function" ){
 			//    Properties.
 			if( arguments.length > 1 ){
 				// Object.defineProperties does ToObject on its first argument.
-				var Properties = Object( arguments[ 1 ] );
-				for( var prop in Properties ){
+				let Properties = Object( arguments[ 1 ] );
+				for( let prop in Properties ){
 					if( hasOwn.call( Properties, prop ) ){
 						obj[ prop ] = Properties[ prop ];
 					}
@@ -114,31 +118,12 @@ if( typeof Object.create != "function" ){
 }
 //: @end-submodule
 
-if( typeof window == "undefined" ){
-	var ate = require( "ate" );
-	var harden = require( "harden" );
-	var raze = require( "raze" );
-}
+const ate = require( "ate" );
+const harden = require( "harden" );
+const protype = require( "protype" )
+const raze = require( "raze" );
 
-if( typeof window != "undefined" &&
-	!( "ate" in window ) )
-{
-	throw new Error( "ate is not defined" );
-}
-
-if( typeof window != "undefined" &&
-	!( "harden" in window ) )
-{
-	throw new Error( "harden is not defined" );
-}
-
-if( typeof window != "undefined" &&
-	!( "raze" in window ) )
-{
-	throw new Error( "raze is not defined" );
-}
-
-var heredito = function heredito( child, parent ){
+const heredito = function heredito( child, parent ){
 	/*;
 		@meta-configuration:
 			{
@@ -148,19 +133,19 @@ var heredito = function heredito( child, parent ){
 		@end-meta-configuration
 	*/
 
-	if( typeof child != "function" ){
+	if( !protype( child, FUNCTION ) ){
 		throw new Error( "invalid child" );
 	}
 
-	if( typeof parent != "function" ){
+	if( !protype( parent, FUNCTION ) ){
 		throw new Error( "invalid parent" );
 	}
 
-	if( typeof child.prototype != "object" ){
+	if( !protype( child.prototype, OBJECT ) ){
 		throw new Error( "child must have a prototype" );
 	}
 
-	if( typeof parent.prototype != "object" ){
+	if( !protype( parent.prototype, OBJECT ) ){
 		throw new Error( "parent must have a prototype" );
 	}
 
@@ -232,7 +217,7 @@ var heredito = function heredito( child, parent ){
 			if( method != "constructor" &&
 				method != "parent" &&
 				method != "level" &&
-				typeof ancestor.prototype[ method ] == "function" )
+				protype( ancestor.prototype[ method ], FUNCTION ) )
 			{
 				let procedure = ancestor.prototype[ method ];
 
@@ -281,7 +266,7 @@ var heredito = function heredito( child, parent ){
 			if( method != "constructor" &&
 				method != "parent" &&
 				method != "level" &&
-				typeof ancestor.prototype[ method ] == "function" )
+				protype( ancestor.prototype[ method ], FUNCTION ) )
 			{
 				let procedure = ancestor.prototype[ method ];
 
@@ -307,6 +292,4 @@ var heredito = function heredito( child, parent ){
 	return child;
 };
 
-if( typeof module != "undefined" ){
-	module.exports = heredito;
-}
+module.exports = heredito;

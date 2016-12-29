@@ -1,6 +1,6 @@
 {
   "name": "heredito",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "description": "Just a copy of NodeJS' util.inherits with polyfill.",
   "main": "heredito.js",
   "scripts": {
@@ -17,14 +17,18 @@
     "heredito"
   ],
   "author": "Richeve S. Bebedor <richeve.bebedor@gmail.com>",
+  "contributors": [
+    "John Lenon Maghanoy <johnlenonmaghanoy@gmail.com>"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/volkovasystems/heredito/issues"
   },
   "homepage": "https://github.com/volkovasystems/heredito#readme",
   "dependencies": {
-    "ate": "0.0.0",
-    "harden": "^0.3.5",
-    "raze": "0.0.8"
+    "ate": "^0.4.0",
+    "harden": "^0.12.0",
+    "protype": "^0.7.0",
+    "raze": "^0.6.0"
   }
 }
