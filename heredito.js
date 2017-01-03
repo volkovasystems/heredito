@@ -50,6 +50,7 @@
 	@include:
 		{
 			"ate": "ate",
+			"een": "een",
 			"harden": "harden",
 			"protype": "protype"
 		}
@@ -67,6 +68,7 @@
 //: @end-support-module
 
 const ate = require( "ate" );
+const een = require( "een" );
 const harden = require( "harden" );
 const protype = require( "protype" );
 
