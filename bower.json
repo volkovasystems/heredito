@@ -9,7 +9,7 @@
     "Richeve S. Bebedor <richeve.bebedor@gmail.com>",
     "John Lenon Maghanoy <johnlenonmaghanoy@gmail.com>"
   ],
-  "description": "Just a copy of NodeJS' util.inherits with polyfill.",
+  "description": "Extensive inheritance.",
   "moduleType": [
     "globals",
     "node"

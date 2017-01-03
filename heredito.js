@@ -44,84 +44,31 @@
 	@end-module-configuration
 
 	@module-documentation:
-		This is just a copy of NodeJS util.heredito method.
-
-		With additional enhancements.
-			1. Use parent instead of super reserved word for better usage.
-			2. Has backward compatibility.
-			3. A dummy class is inserted between child and parent.
-				3.1. Prototype properties can be shared even before declaration.
-				3.2. Prototype properties is overriden through dummy class.
-
-		Please refer to their documentation.
-		@link:https://nodejs.org/api/util.html#util_util_inherits_constructor_superconstructor
+		Extensive inheritance.
 	@end-module-documentation
 
 	@include:
 		{
 			"ate": "ate",
 			"harden": "harden",
-			"protype": "protype",
-			"raze": "raze"
+			"protype": "protype"
 		}
 	@end-include
 */
 
-//: @submodule:
-/*;
-	This is taken from
-	https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Object/create
-	I just modified the code formats to my liking.
-*/
-if( typeof Object.create != "function" ){
-	// Production steps of ECMA-262, Edition 5, 15.2.3.5
-	// Reference: http://es5.github.io/#x15.2.3.5
-	Object.create = ( function module( ){
-		// To save on memory, use a shared constructor
-		function Temp( ) { }
-
-		// make a safe reference to Object.prototype.hasOwnProperty
-		let hasOwn = Object.prototype.hasOwnProperty;
-
-		return function module( O ){
-			// 1. If Type(O) is not Object or Null throw a TypeError exception.
-			if( typeof O != "object" ){
-				throw TypeError( "Object prototype may only be an Object or null" );
-			}
-
-			// 2. Let obj be the result of creating a new object as if by the
-			//    expression new Object() where Object is the standard built-in
-			//    constructor with that name
-			// 3. Set the [[Prototype]] internal property of obj to O.
-			Temp.prototype = O;
-			let obj = new Temp( );
-			Temp.prototype = null; // Let's not keep a stray reference to O...
-
-			// 4. If the argument Properties is present and not undefined, add
-			//    own properties to obj as if by calling the standard built-in
-			//    function Object.defineProperties with arguments obj and
-			//    Properties.
-			if( arguments.length > 1 ){
-				// Object.defineProperties does ToObject on its first argument.
-				let Properties = Object( arguments[ 1 ] );
-				for( let prop in Properties ){
-					if( hasOwn.call( Properties, prop ) ){
-						obj[ prop ] = Properties[ prop ];
-					}
-				}
-			}
-
-			// 5. Return obj
-			return obj;
-		};
-	} )( );
-}
-//: @end-submodule
+//: @support-module:
+	//: @reference: https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Object/create
+	if(typeof Object.create!="function"){Object.create=(function module(){function Temp(){}
+	let hasOwn=Object.prototype.hasOwnProperty;return function module(O){if(typeof O!="object"){
+	throw TypeError("Object prototype may only be an Object or null")}
+	Temp.prototype=O;let obj=new Temp();Temp.prototype=null;if(arguments.length>1){
+	let Properties=Object(arguments[1]);for(let prop in Properties){
+	if(hasOwn.call(Properties,prop)){obj[prop]=Properties[prop]}}}return obj}})()}
+//: @end-support-module
 
 const ate = require( "ate" );
 const harden = require( "harden" );
-const protype = require( "protype" )
-const raze = require( "raze" );
+const protype = require( "protype" );
 
 const heredito = function heredito( child, parent ){
 	/*;
@@ -150,6 +97,7 @@ const heredito = function heredito( child, parent ){
 	}
 
 	let connector = function connector( ){ };
+
 	//: Rename the connector to make it look like the child.
 	ate( "name", child.name, connector );
 
@@ -166,18 +114,19 @@ const heredito = function heredito( child, parent ){
 	//: Attach the parent to the connector.
 	connector.prototype.parent = parent;
 
-	let childCache = { };
+	let cache = { };
 	let childProperty = Object.getOwnPropertyNames( child.prototype );
-	let childPropertyLength = childProperty.length;
-	for( let index = 0; index < childPropertyLength; index++ ){
+	let length = childProperty.length;
+	for( let index = 0; index < length; index++ ){
 		let property = childProperty[ index ];
 
 		if( child.prototype.hasOwnProperty( property ) ){
 			/*;
-				We need to do this because
-					we don't want to override the child prototype.
+				@note:
+					We need to do this because we don't want to override the child prototype.
+				@end-note
 			*/
-			childCache[ property ] = child.prototype[ property ];
+			cache[ property ] = child.prototype[ property ];
 		}
 	}
 
@@ -191,103 +140,9 @@ const heredito = function heredito( child, parent ){
 	} );
 
 	//: Transfer the cached properties back to the child.
-	for( let property in childCache ){
-		child.prototype[ property ] = childCache[ property ];
+	for( let property in cache ){
+		child.prototype[ property ] = cache[ property ];
 	}
-
-	child.prototype.root = function root( depth ){
-		let ancestor = [ ];
-
-		let parent = this.constructor.prototype.parent;
-		while( parent ){
-			ancestor.push( parent );
-
-			parent = parent.prototype.parent;
-		}
-
-		if( depth >= ancestor.length || depth < 0 ){
-			throw new Error( "root overflow" );
-		}
-
-		ancestor = ancestor.reverse( )[ depth ];
-
-		let scope = { };
-		let ancestorProperty = Object.getOwnPropertyNames( ancestor.prototype );
-		ancestorProperty.forEach( ( function onEachProperty( method ){
-			if( method != "constructor" &&
-				method != "parent" &&
-				method != "level" &&
-				protype( ancestor.prototype[ method ], FUNCTION ) )
-			{
-				let procedure = ancestor.prototype[ method ];
-
-				let delegate = ( function delegate( ){
-					let result = procedure.apply( this, raze( arguments ) );
-
-					if( result !== this ){
-						return result;
-					}
-
-					return this;
-				} ).bind( this );
-
-				ate( "name", method, delegate );
-
-				scope[ method ] = delegate;
-			}
-		} ).bind( this ) );
-
-		return scope;
-	};
-
-	child.prototype.level = function level( depth ){
-		let ancestor = parent;
-
-		if( depth < 0 ){
-			throw new Error( "invalid level" );
-
-		}else if( depth == 0 ){
-			return this;
-
-		}else{
-			for( let index = 1; index < depth; index++ ){
-				if( ancestor.prototype.parent ){
-					ancestor = ancestor.prototype.parent;
-
-				}else{
-					throw new Error( "level overflow" );
-				}
-			}
-		}
-
-		let scope = { };
-		let ancestorProperty = Object.getOwnPropertyNames( ancestor.prototype );
-		ancestorProperty.forEach( ( function onEachProperty( method ){
-			if( method != "constructor" &&
-				method != "parent" &&
-				method != "level" &&
-				protype( ancestor.prototype[ method ], FUNCTION ) )
-			{
-				let procedure = ancestor.prototype[ method ];
-
-				let delegate = ( function delegate( ){
-					let result = procedure.apply( this, raze( arguments ) );
-
-					if( result !== this ){
-						return result;
-					}
-
-					return this;
-				} ).bind( this );
-
-				ate( "name", method, delegate );
-
-				scope[ method ] = delegate;
-			}
-		} ).bind( this ) );
-
-		return scope;
-	};
 
 	return child;
 };
