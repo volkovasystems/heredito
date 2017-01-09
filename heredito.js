@@ -67,56 +67,13 @@
 	@end-include
 */
 
-//: @submodule:
-/*;
-	This is taken from
-	https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Object/create
-	I just modified the code formats to my liking.
-*/
-if( typeof Object.create != "function" ){
-	// Production steps of ECMA-262, Edition 5, 15.2.3.5
-	// Reference: http://es5.github.io/#x15.2.3.5
-	Object.create = ( function module( ){
-		// To save on memory, use a shared constructor
-		function Temp( ) { }
-
-		// make a safe reference to Object.prototype.hasOwnProperty
-		let hasOwn = Object.prototype.hasOwnProperty;
-
-		return function module( O ){
-			// 1. If Type(O) is not Object or Null throw a TypeError exception.
-			if( typeof O != "object" ){
-				throw TypeError( "Object prototype may only be an Object or null" );
-			}
-
-			// 2. Let obj be the result of creating a new object as if by the
-			//    expression new Object() where Object is the standard built-in
-			//    constructor with that name
-			// 3. Set the [[Prototype]] internal property of obj to O.
-			Temp.prototype = O;
-			let obj = new Temp( );
-			Temp.prototype = null; // Let's not keep a stray reference to O...
-
-			// 4. If the argument Properties is present and not undefined, add
-			//    own properties to obj as if by calling the standard built-in
-			//    function Object.defineProperties with arguments obj and
-			//    Properties.
-			if( arguments.length > 1 ){
-				// Object.defineProperties does ToObject on its first argument.
-				let Properties = Object( arguments[ 1 ] );
-				for( let prop in Properties ){
-					if( hasOwn.call( Properties, prop ) ){
-						obj[ prop ] = Properties[ prop ];
-					}
-				}
-			}
-
-			// 5. Return obj
-			return obj;
-		};
-	} )( );
-}
-//: @end-submodule
+//: @support-module:
+	//: @reference: https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Object/create
+	"function"!=typeof Object.create&&(Object.create=function(t){var e=function(){};
+	return function(n,r){if(n!==Object(n)&&null!==n)throw TypeError("Argument must be an object, or null");
+	e.prototype=n||{};var o=new e;return e.prototype=null,r!==t&&Object.defineProperties(o,r),
+	null===n&&(o.__proto__=null),o}}());
+//: @end-support-module
 
 const ate = require( "ate" );
 const harden = require( "harden" );
@@ -172,10 +129,19 @@ const heredito = function heredito( child, parent ){
 	for( let index = 0; index < childPropertyLength; index++ ){
 		let property = childProperty[ index ];
 
-		if( child.prototype.hasOwnProperty( property ) ){
+		/*;
+			@note:
+				We will not cache constants, and non-functions.
+			@end-note
+		*/
+		if( !( /^[A-Z_][A-Z0-9_]+$/ ).test( property ) &&
+			protype( child.prototype[ property ], FUNCTION ) &&
+			child.prototype.hasOwnProperty( property ) )
+		{
 			/*;
-				We need to do this because
-					we don't want to override the child prototype.
+				@note:
+					We need to do this because we don't want to override the child prototype.
+				@end-note
 			*/
 			childCache[ property ] = child.prototype[ property ];
 		}

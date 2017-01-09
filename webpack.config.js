@@ -25,7 +25,11 @@ module.exports = {
 		new ResolverPlugin( new DirectoryDescriptionFilePlugin( "bower.json", [ "support" ] ) ),
 		new ResolverPlugin( new DirectoryDescriptionFilePlugin( ".bower.json", [ "main" ] ) ),
 		new UglifyJsPlugin( {
-			"compress": { "warnings": false },
+			"compress": {
+				"keep_fargs": true,
+				"keep_fnames": true,
+				"warnings": false
+			},
 			"comments": false,
 			"sourceMap": true,
 			"mangle": false

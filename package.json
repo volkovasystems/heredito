@@ -1,6 +1,6 @@
 {
   "name": "heredito",
-  "version": "0.11.0",
+  "version": "0.12.0",
   "description": "Just a copy of NodeJS' util.inherits with polyfill.",
   "main": "heredito.js",
   "support": "heredito.support.js",
@@ -29,10 +29,10 @@
   },
   "homepage": "https://github.com/volkovasystems/heredito#readme",
   "dependencies": {
-    "ate": "^0.4.0",
+    "ate": "^0.5.0",
     "babel-runtime": "^6.20.0",
-    "harden": "^0.12.0",
-    "protype": "^0.7.0",
+    "harden": "^0.13.0",
+    "protype": "^0.8.0",
     "raze": "^0.6.0"
   },
   "devDependencies": {
