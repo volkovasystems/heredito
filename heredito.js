@@ -60,7 +60,6 @@
 	@include:
 		{
 			"ate": "ate",
-			"harden": "harden",
 			"protype": "protype",
 			"raze": "raze"
 		}
@@ -76,7 +75,6 @@
 //: @end-support-module
 
 const ate = require( "ate" );
-const harden = require( "harden" );
 const protype = require( "protype" )
 const raze = require( "raze" );
 
