@@ -1,6 +1,6 @@
 {
   "name": "heredito",
-  "version": "0.14.0",
+  "version": "0.15.0",
   "description": "Just a copy of NodeJS' util.inherits with polyfill.",
   "main": "heredito.js",
   "support": "heredito.support.js",
