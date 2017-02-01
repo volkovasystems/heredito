@@ -1,10 +1,11 @@
 {
   "name": "heredito",
-  "version": "0.13.0",
+  "version": "0.14.0",
   "description": "Just a copy of NodeJS' util.inherits with polyfill.",
   "main": "heredito.js",
   "support": "heredito.support.js",
   "deploy": "heredito.deploy.js",
+  "browser": "heredito.deploy.js",
   "scripts": {
     "build": "babel heredito.js -o heredito.support.js && webpack",
     "test": "mocha heredito-test.js"
