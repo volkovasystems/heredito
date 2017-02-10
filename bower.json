@@ -1,6 +1,6 @@
 {
   "name": "heredito",
-  "version": "0.17.0",
+  "version": "0.18.0",
   "main": "heredito.deploy.js",
   "homepage": "https://github.com/volkovasystems/heredito",
   "authors": [
@@ -27,8 +27,8 @@
     "tests"
   ],
   "dependencies": {
-    "ate": "^0.8.0",
-    "protype": "^0.11.0",
-    "raze": "^0.12.0"
+    "ate": "^0.9.0",
+    "protype": "^0.15.0",
+    "raze": "^0.16.0"
   }
 }
