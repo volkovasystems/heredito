@@ -16,4 +16,5 @@ bower install \
 ate \
 protype \
 raze \
---save
+--save \
+--force-latest
