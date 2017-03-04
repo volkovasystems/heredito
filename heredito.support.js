@@ -59,6 +59,7 @@
               
               	@include:
               		{
+              			"arkount": "arkount",
               			"ate": "ate",
               			"protype": "protype",
               			"raze": "raze"
@@ -74,6 +75,7 @@ var _getOwnPropertyNames = require("babel-runtime/core-js/object/get-own-propert
 		null === n && (o.__proto__ = null), o;};}());
 //: @end-support-module
 
+var arkount = require("arkount");
 var ate = require("ate");
 var protype = require("protype");
 var raze = require("raze");
@@ -169,7 +171,7 @@ var heredito = function heredito(child, parent) {
 			parent = parent.prototype.parent;
 		}
 
-		if (depth >= ancestor.length || depth < 0) {
+		if (depth >= arkount(ancestor) || depth < 0) {
 			throw new Error("root overflow");
 		}
 
