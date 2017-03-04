@@ -1,5 +1,6 @@
 yarn add \
 babel-runtime \
+arkount \
 ate \
 protype \
 raze \
@@ -13,6 +14,7 @@ source-map-loader \
 webpack \
 --dev && \
 bower install \
+arkount \
 ate \
 protype \
 raze \
