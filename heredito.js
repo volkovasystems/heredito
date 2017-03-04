@@ -59,6 +59,7 @@
 
 	@include:
 		{
+			"arkount": "arkount",
 			"ate": "ate",
 			"protype": "protype",
 			"raze": "raze"
@@ -74,6 +75,7 @@
 	null===n&&(o.__proto__=null),o}}());
 //: @end-support-module
 
+const arkount = require( "arkount" );
 const ate = require( "ate" );
 const protype = require( "protype" )
 const raze = require( "raze" );
@@ -169,7 +171,7 @@ const heredito = function heredito( child, parent ){
 			parent = parent.prototype.parent;
 		}
 
-		if( depth >= ancestor.length || depth < 0 ){
+		if( depth >= arkount( ancestor ) || depth < 0 ){
 			throw new Error( "root overflow" );
 		}
 
