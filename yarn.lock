@@ -21,8 +21,8 @@ ajv-keywords@^1.1.1:
   resolved "https://registry.yarnpkg.com/ajv-keywords/-/ajv-keywords-1.5.1.tgz#314dd0a4b3368fad3dfcdc54ede6171b886daf3c"
 
 ajv@^4.7.0, ajv@^4.9.1:
-  version "4.11.3"
-  resolved "https://registry.yarnpkg.com/ajv/-/ajv-4.11.3.tgz#ce30bdb90d1254f762c75af915fb3a63e7183d22"
+  version "4.11.4"
+  resolved "https://registry.yarnpkg.com/ajv/-/ajv-4.11.4.tgz#ebf3a55d4b132ea60ff5847ae85d2ef069960b45"
   dependencies:
     co "^4.6.0"
     json-stable-stringify "^1.0.1"
@@ -65,15 +65,15 @@ are-we-there-yet@~1.1.2:
     delegates "^1.0.0"
     readable-stream "^2.0.0 || ^1.1.13"
 
-arkount@^0.0.0:
-  version "0.0.0"
-  resolved "https://registry.yarnpkg.com/arkount/-/arkount-0.0.0.tgz#c373effa7be6100190b03a4cc56f212e00611f13"
+arkount@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/arkount/-/arkount-0.1.0.tgz#f4f5f2c1f8e645e67c121d60d8ea727dd6c61511"
   dependencies:
     babel-runtime "^6.23.0"
-    doubt "^0.19.0"
-    raze "^0.20.0"
-    truly "^0.14.0"
-    wichevr "^0.2.0"
+    doubt "^0.20.0"
+    raze "^0.21.0"
+    truly "^0.15.0"
+    wichevr "^0.3.0"
 
 arr-diff@^2.0.0:
   version "2.0.0"
@@ -140,21 +140,17 @@ async@^2.1.2:
   dependencies:
     lodash "^4.14.0"
 
-async@~0.2.6:
-  version "0.2.10"
-  resolved "https://registry.yarnpkg.com/async/-/async-0.2.10.tgz#b6bbe0b0674b9d719708ca38de8c237cb526c3d1"
-
 asynckit@^0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/asynckit/-/asynckit-0.4.0.tgz#c79ed97f7f34cb8f2ba1bc9790bcc366474b4b79"
 
-ate@^0.12.0:
-  version "0.12.0"
-  resolved "https://registry.yarnpkg.com/ate/-/ate-0.12.0.tgz#87b2034d2ff1dcf27960d1d98c0a9a3f43b5753e"
+ate@^0.13.0:
+  version "0.13.0"
+  resolved "https://registry.yarnpkg.com/ate/-/ate-0.13.0.tgz#e72c510a77f927cd92af139966f5401381483212"
   dependencies:
     babel-runtime "^6.23.0"
-    falzy "^0.14.0"
-    protype "^0.18.0"
+    falzy "^0.15.0"
+    protype "^0.19.0"
     zelf "^0.9.0"
 
 aws-sign2@~0.6.0:
@@ -817,12 +813,13 @@ caseless@~0.12.0:
   version "0.12.0"
   resolved "https://registry.yarnpkg.com/caseless/-/caseless-0.12.0.tgz#1b681c21ff84033c826543090689420d187151dc"
 
-cemento@^0.12.0:
-  version "0.12.0"
-  resolved "https://registry.yarnpkg.com/cemento/-/cemento-0.12.0.tgz#4d32a7470b25bf4fc803c501da1deca6ed16f418"
+cemento@^0.13.0:
+  version "0.13.0"
+  resolved "https://registry.yarnpkg.com/cemento/-/cemento-0.13.0.tgz#552ea265920db2c9bf38095da74841bf2fe6c646"
   dependencies:
     babel-runtime "^6.23.0"
     harden "^0.17.0"
+    kount "^0.10.0"
 
 center-align@^0.1.1:
   version "0.1.3"
@@ -1039,17 +1036,17 @@ domain-browser@^1.1.1:
   version "1.1.7"
   resolved "https://registry.yarnpkg.com/domain-browser/-/domain-browser-1.1.7.tgz#867aa4b093faa05f1de08c06f4d7b21fdf8698bc"
 
-doubt@^0.19.0:
-  version "0.19.0"
-  resolved "https://registry.yarnpkg.com/doubt/-/doubt-0.19.0.tgz#27ea66bf3b6baccb4a7c4821ab90622f5d22f250"
+doubt@^0.20.0:
+  version "0.20.0"
+  resolved "https://registry.yarnpkg.com/doubt/-/doubt-0.20.0.tgz#a68b9b3e1832b10881c5e1ce21a141cde2f72d71"
   dependencies:
     babel-runtime "^6.23.0"
-    cemento "^0.12.0"
+    cemento "^0.13.0"
     circular-json "^0.3.1"
-    falzy "^0.14.0"
+    falzy "^0.15.0"
     harden "^0.17.0"
     khount "^0.0.0"
-    protype "^0.18.0"
+    protype "^0.19.0"
     stringe "^0.0.0"
 
 ecc-jsbn@~0.1.1:
@@ -1139,12 +1136,12 @@ extsprintf@1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/extsprintf/-/extsprintf-1.0.2.tgz#e1080e0658e300b06294990cc70e1502235fd550"
 
-falzy@^0.14.0:
-  version "0.14.0"
-  resolved "https://registry.yarnpkg.com/falzy/-/falzy-0.14.0.tgz#62ac707d9fe29f339417e152316442b47e76af65"
+falzy@^0.15.0:
+  version "0.15.0"
+  resolved "https://registry.yarnpkg.com/falzy/-/falzy-0.15.0.tgz#84b55479b063917de8c1dfdfc12c40b79aed8138"
   dependencies:
     babel-runtime "^6.23.0"
-    protype "^0.18.0"
+    protype "^0.19.0"
 
 filename-regex@^2.0.0:
   version "2.0.0"
@@ -1213,8 +1210,8 @@ fstream-ignore@~1.0.5:
     minimatch "^3.0.0"
 
 fstream@^1.0.0, fstream@^1.0.2, fstream@~1.0.10:
-  version "1.0.10"
-  resolved "https://registry.yarnpkg.com/fstream/-/fstream-1.0.10.tgz#604e8a92fe26ffd9f6fae30399d4984e1ab22822"
+  version "1.0.11"
+  resolved "https://registry.yarnpkg.com/fstream/-/fstream-1.0.11.tgz#5c1fb1f117477114f0632a0eb4b71b3cb0fd3171"
   dependencies:
     graceful-fs "^4.1.2"
     inherits "~2.0.0"
@@ -1285,8 +1282,8 @@ har-schema@^1.0.5:
   resolved "https://registry.yarnpkg.com/har-schema/-/har-schema-1.0.5.tgz#d263135f43307c02c602afc8fe95970c0151369e"
 
 har-validator@~4.2.0:
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/har-validator/-/har-validator-4.2.0.tgz#c2efa9f6c50fee92ef033cf30b796a2c5b660cd7"
+  version "4.2.1"
+  resolved "https://registry.yarnpkg.com/har-validator/-/har-validator-4.2.1.tgz#33481d0f1bbff600dd203d75812a6a5fba002e2a"
   dependencies:
     ajv "^4.9.1"
     har-schema "^1.0.5"
@@ -1562,6 +1559,12 @@ kind-of@^3.0.2:
   dependencies:
     is-buffer "^1.0.2"
 
+kount@^0.10.0:
+  version "0.10.0"
+  resolved "https://registry.yarnpkg.com/kount/-/kount-0.10.0.tgz#92f6dc18a5c8e8844e29a93aec268b58ad92f53b"
+  dependencies:
+    babel-runtime "^6.23.0"
+
 lazy-cache@^1.0.3:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/lazy-cache/-/lazy-cache-1.0.4.tgz#a1d78fc3a50474cb80845d3b3b6e1da49a446e8e"
@@ -1740,8 +1743,8 @@ nopt@~3.0.6:
     abbrev "1"
 
 normalize-package-data@^2.3.2:
-  version "2.3.5"
-  resolved "https://registry.yarnpkg.com/normalize-package-data/-/normalize-package-data-2.3.5.tgz#8d924f142960e1777e7ffe170543631cc7cb02df"
+  version "2.3.6"
+  resolved "https://registry.yarnpkg.com/normalize-package-data/-/normalize-package-data-2.3.6.tgz#498fa420c96401f787402ba21e600def9f981fff"
   dependencies:
     hosted-git-info "^2.1.4"
     is-builtin-module "^1.0.0"
@@ -1909,12 +1912,12 @@ process@^0.11.0:
   version "0.11.9"
   resolved "https://registry.yarnpkg.com/process/-/process-0.11.9.tgz#7bd5ad21aa6253e7da8682264f1e11d11c0318c1"
 
-protype@^0.18.0:
-  version "0.18.0"
-  resolved "https://registry.yarnpkg.com/protype/-/protype-0.18.0.tgz#1c0861d71e58a146e8824382ad3aaeead69e14c3"
+protype@^0.19.0:
+  version "0.19.0"
+  resolved "https://registry.yarnpkg.com/protype/-/protype-0.19.0.tgz#dbe110ca7c0e674356a8df32fbe55ff4f3a0ac45"
   dependencies:
     babel-runtime "^6.23.0"
-    cemento "^0.12.0"
+    cemento "^0.13.0"
     harden "^0.17.0"
 
 prr@~0.0.0:
@@ -1940,8 +1943,8 @@ punycode@^1.2.4, punycode@^1.4.1:
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-1.4.1.tgz#c0d5a63b2718800ad8e1eb0fa5269c84dd41845e"
 
 qs@~6.3.0:
-  version "6.3.1"
-  resolved "https://registry.yarnpkg.com/qs/-/qs-6.3.1.tgz#918c0b3bcd36679772baf135b1acb4c1651ed79d"
+  version "6.3.2"
+  resolved "https://registry.yarnpkg.com/qs/-/qs-6.3.2.tgz#e75bd5f6e268122a2a0e0bda630b2550c166502c"
 
 querystring-es3@^0.2.0:
   version "0.2.1"
@@ -1962,12 +1965,12 @@ randombytes@^2.0.0, randombytes@^2.0.1:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/randombytes/-/randombytes-2.0.3.tgz#674c99760901c3c4112771a31e521dc349cc09ec"
 
-raze@^0.20.0:
-  version "0.20.0"
-  resolved "https://registry.yarnpkg.com/raze/-/raze-0.20.0.tgz#9af3b7314b0714dbacce9e43d010c92758e94d28"
+raze@^0.21.0:
+  version "0.21.0"
+  resolved "https://registry.yarnpkg.com/raze/-/raze-0.21.0.tgz#ae674746cbc249ae57885fab2e4c55e45d8cff54"
   dependencies:
     babel-runtime "^6.23.0"
-    doubt "^0.19.0"
+    doubt "^0.20.0"
     harden "^0.17.0"
 
 rc@~1.1.6:
@@ -2339,12 +2342,12 @@ trim-right@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/trim-right/-/trim-right-1.0.1.tgz#cb2e1203067e0c8de1f614094b9fe45704ea6003"
 
-truly@^0.14.0:
-  version "0.14.0"
-  resolved "https://registry.yarnpkg.com/truly/-/truly-0.14.0.tgz#f3ef56ec27b6787a8c190624dd8fab05f05fed23"
+truly@^0.15.0:
+  version "0.15.0"
+  resolved "https://registry.yarnpkg.com/truly/-/truly-0.15.0.tgz#f09ab60f41fb560c1084359a334fa367414492bc"
   dependencies:
     babel-runtime "^6.23.0"
-    protype "^0.18.0"
+    protype "^0.19.0"
 
 tty-browserify@0.0.0:
   version "0.0.0"
@@ -2359,10 +2362,9 @@ tweetnacl@^0.14.3, tweetnacl@~0.14.0:
   resolved "https://registry.yarnpkg.com/tweetnacl/-/tweetnacl-0.14.5.tgz#5ae68177f192d4456269d108afa93ff8743f4f64"
 
 uglify-js@^2.7.5:
-  version "2.8.5"
-  resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-2.8.5.tgz#ae9f5b143f4183d99a1dabb350e243fdc06641ed"
+  version "2.8.10"
+  resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-2.8.10.tgz#bd0be568369f7be8cad2a4161fa90ada118ef73a"
   dependencies:
-    async "~0.2.6"
     source-map "~0.5.1"
     uglify-to-browserify "~1.0.0"
     yargs "~3.10.0"
@@ -2434,8 +2436,8 @@ watchpack@^1.2.0:
     graceful-fs "^4.1.2"
 
 webpack-sources@^0.1.4:
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/webpack-sources/-/webpack-sources-0.1.4.tgz#ccc2c817e08e5fa393239412690bb481821393cd"
+  version "0.1.5"
+  resolved "https://registry.yarnpkg.com/webpack-sources/-/webpack-sources-0.1.5.tgz#aa1f3abf0f0d74db7111c40e500b84f966640750"
   dependencies:
     source-list-map "~0.1.7"
     source-map "~0.5.3"
@@ -2469,13 +2471,13 @@ which-module@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/which-module/-/which-module-1.0.0.tgz#bba63ca861948994ff307736089e3b96026c2a4f"
 
-wichevr@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/wichevr/-/wichevr-0.2.0.tgz#c1ec2e8edd76dc15a4ad0e160b9743b9b36bca8c"
+wichevr@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/wichevr/-/wichevr-0.3.0.tgz#54231d069dca7e59dc039a4feeeec92930d05ea6"
   dependencies:
     babel-runtime "^6.23.0"
-    raze "^0.20.0"
-    truly "^0.14.0"
+    raze "^0.21.0"
+    truly "^0.15.0"
 
 wide-align@^1.1.0:
   version "1.1.0"
