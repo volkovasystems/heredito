@@ -57,16 +57,6 @@
 	@end-include
 */
 
-//: @support-module:
-	//: @reference: https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Object/create
-	if(typeof Object.create!="function"){Object.create=(function module(){function Temp(){}
-	let hasOwn=Object.prototype.hasOwnProperty;return function module(O){if(typeof O!="object"){
-	throw TypeError("Object prototype may only be an Object or null")}
-	Temp.prototype=O;let obj=new Temp();Temp.prototype=null;if(arguments.length>1){
-	let Properties=Object(arguments[1]);for(let prop in Properties){
-	if(hasOwn.call(Properties,prop)){obj[prop]=Properties[prop]}}}return obj}})()}
-//: @end-support-module
-
 const ate = require( "ate" );
 const een = require( "een" );
 const harden = require( "harden" );
@@ -122,7 +112,15 @@ const heredito = function heredito( child, parent ){
 	for( let index = 0; index < length; index++ ){
 		let property = list[ index ];
 
-		if( child.prototype.hasOwnProperty( property ) ){
+		/*;
+			@note:
+				We will not cache constants, and non-functions.
+			@end-note
+		*/
+		if( !( /^[A-Z_][A-Z0-9_]+$/ ).test( property ) &&
+			protype( child.prototype[ property ], FUNCTION ) &&
+			child.prototype.hasOwnProperty( property ) )
+		{
 			/*;
 				@note:
 					We need to do this because we don't want to override the child prototype.
