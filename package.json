@@ -1,6 +1,6 @@
 {
   "name": "heredito",
-  "version": "0.23.0",
+  "version": "0.26.0",
   "description": "Extensive inheritance.",
   "main": "heredito.js",
   "support": "heredito.support.js",
