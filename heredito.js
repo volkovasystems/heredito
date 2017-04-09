@@ -52,7 +52,8 @@
 			"ate": "ate",
 			"een": "een",
 			"harden": "harden",
-			"protype": "protype"
+			"protype": "protype",
+			"wichevr": "wichevr"
 		}
 	@end-include
 */
@@ -61,6 +62,10 @@ const ate = require( "ate" );
 const een = require( "een" );
 const harden = require( "harden" );
 const protype = require( "protype" );
+const wichevr = require( "wichevr" );
+
+const connect = require( "./connect.js" );
+const PUSH = Symbol.for( "push" );
 
 const heredito = function heredito( child, parent ){
 	/*;
@@ -88,12 +93,24 @@ const heredito = function heredito( child, parent ){
 		throw new Error( "parent must have a prototype" );
 	}
 
-	let connector = parent.connector || function connector( ){ };
 
-	//: @note: Rename the connector to make it look like the child.
-	ate( "name", child.name, connector );
 
-	//: Inherit the parent to the connector.
+	let connector = wichevr( child.connector, connect( ) );
+
+	/*;
+		@note:
+			Rename the connector to make it look like the child.
+		@end-note
+	*/
+	if( connector.name !== child.name ){
+		ate( "name", child.name, connector );
+	}
+
+	/*;
+		@note:
+			Inherit the parent to the connector.
+		@end-note
+	*/
 	connector.prototype = Object.create( parent.prototype, {
 		"constructor": {
 			"value": parent,
@@ -103,23 +120,22 @@ const heredito = function heredito( child, parent ){
 		}
 	} );
 
-	//: @note: Attach the parent to the connector.
+	/*;
+		@note:
+			Attach the parent to the connector.
+		@end-note
+	*/
 	connector.prototype.parent = parent;
 
 	let cache = { };
-	let list = Object.getOwnPropertyNames( child.prototype );
-	let length = list.length;
-	for( let index = 0; index < length; index++ ){
-		let property = list[ index ];
-
+	Object.getOwnPropertyNames( child.prototype ).forEach( ( property ) => {
 		/*;
 			@note:
 				We will not cache constants, and non-functions.
 			@end-note
 		*/
 		if( !( /^[A-Z_][A-Z0-9_]+$/ ).test( property ) &&
-			protype( child.prototype[ property ], FUNCTION ) &&
-			child.prototype.hasOwnProperty( property ) )
+			protype( child.prototype[ property ], FUNCTION ) )
 		{
 			/*;
 				@note:
@@ -128,9 +144,13 @@ const heredito = function heredito( child, parent ){
 			*/
 			cache[ property ] = child.prototype[ property ];
 		}
-	}
+	} );
 
-	//: @note: Inherit from the connector. This will override the prototype.
+	/*;
+		@note:
+			Inherit from the connector. This will override the prototype.
+		@end-note
+	*/
 	child.prototype = Object.create( connector.prototype, {
 		"constructor": {
 			"value": child,
@@ -140,15 +160,19 @@ const heredito = function heredito( child, parent ){
 		}
 	} );
 
-	//: @note: Transfer the cached properties back to the child.
-	for( let property in cache ){
+	/*;
+		@note:
+			Transfer the cached properties back to the child.
+		@end-note
+	*/
+	Object.getOwnPropertyNames( cache ).forEach( ( property ) => {
 		child.prototype[ property ] = cache[ property ];
-	}
+	} );
 
 	harden( "connector", connector, child );
-	let inheritance = connector.inheritance = connector.inheritance || [ ];
-	if( !een( inheritance, child ) ){
-		connector.inheritance.push( child );
+	let inheritance = connector.inheritance = wichevr( connector.inheritance, [ ] );
+	if( !een( inheritance, parent ) ){
+		connector.inheritance.push( parent );
 	}
 
 	return child;

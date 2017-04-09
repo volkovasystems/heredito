@@ -26,11 +26,5 @@
     "bower_components",
     "test",
     "tests"
-  ],
-  "dependencies": {
-    "arkount": "^0.1.0",
-    "ate": "^0.13.0",
-    "protype": "^0.19.0",
-    "raze": "^0.21.0"
-  }
+  ]
 }
