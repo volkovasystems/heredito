@@ -1,3 +1,5 @@
+"use strict";
+
 /*;
 	@submodule-license:
 		The MIT License (MIT)
@@ -39,8 +41,7 @@
 			"repository": "https://github.com/volkovasystems/heredito.git",
 			"test": "heredito-test.js",
 			"global": false,
-			"internal": true,
-			"class": true
+			"internal": true
 		}
 	@end-submodule-configuration
 
@@ -51,40 +52,54 @@
 	@include:
 		{
 			"diatom": "diatom",
+			"een": "een",
 			"falzy": "falzy",
-			"protype": "protype"
+			"protype": "protype",
+			"statis": "statis"
 		}
 	@end-include
 */
 
 const diatom = require( "diatom" );
+const een = require( "een" );
 const falzy = require( "falzy" );
 const protype = require( "protype" );
+const statis = require( "statis" );
 
 const INHERITANCE = Symbol( "inheritance" );
 
 const connect = function connect( ){
 	let Connector = diatom( "Connector" );
 
-	Connector.stasis( INHERITANCE, [ ] );
+	statis( Connector )
+		.attach( INHERITANCE, [ ] )
+		.attach( "push", function push( parent ){
+			/*;
+				@meta-configuration:
+					{
+						"parent:required": "function"
+					}
+				@end-meta-configuration
+			*/
+			if( falzy( parent ) || !protype( parent, FUNCTION ) ){
+				throw new Error( "invalid parent class" );
+			}
 
+			if( !een( Connector[ INHERITANCE ], parent ) ){
+				Connector[ INHERITANCE ].push( parent );
+			}
 
-	harden( INHERITANCE, [ ], Connector );
-	harden( "push", function push( parent ){
-		/*;
-			@meta-configuration:
-				{
-					"parent:required": "function"
-				}
-			@end-meta-configuration
-		*/
-		if( falzy( parent ) || !protype( parent, FUNCTION ) ){
-			throw new Error( "invalid parent class" );
-		}
+			/*;
+				@note:
+					Accumulate parent to the connector.
+				@end-note
+			*/
+			while( truly( parent = parent.prototype.parent ) ){
+				Connector.push( parent );
+			}
 
-		Connector[ INHERITANCE ].push( parent );
-	}, Connector );
-
+			return Connector;
+		} );
 
 	return Connector;
 };

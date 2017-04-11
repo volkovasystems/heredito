@@ -59,121 +59,80 @@
 */
 
 const ate = require( "ate" );
-const een = require( "een" );
 const harden = require( "harden" );
 const protype = require( "protype" );
 const wichevr = require( "wichevr" );
 
 const connect = require( "./connect.js" );
-const PUSH = Symbol.for( "push" );
+const inherit = require( "./inherit.js" );
+
+const METHOD_CACHE = Symbol( "method-cache" );
+
+const cacheMethod = function cacheMethod( blueprint ){
+	/*;
+		@meta-configuration:
+			{
+				"blueprint:required": "function"
+			}
+		@end-meta-configuration
+	*/
+
+	if( falzy( blueprint ) || !protype( blueprint, FUNCTION ) ){
+		throw new Error( "invalid blueprint" );
+	}
+
+	let cache = wichis( blueprint[ METHOD_CACHE ], [ ] );
+	harden( METHOD_CACHE, cache, blueprint );
+
+	if( arid( cache ) ){
+		metis( blueprint.prototype ).forEach( ( method ) => nsrt( cache, method ) );
+	}
+
+	Object.getOwnPropertyNames( blueprint.prototype )
+		.forEach( ( property ) => ( !( /^[A-Z_][A-Z0-9_]+$/ ).test( property ) &&
+			protype( blueprint.prototype[ property ], FUNCTION ) &&
+			nsrt( cache, blueprint.prototype[ property ] ) ) );
+
+	return blueprint;
+};
 
 const heredito = function heredito( child, parent ){
 	/*;
 		@meta-configuration:
 			{
 				"child:required": "function",
-				"parent:required": "function"
+				"parent:required": [
+					"function",
+					"[function]",
+					"...function"
+				]
 			}
 		@end-meta-configuration
 	*/
 
-	if( !protype( child, FUNCTION ) ){
+	if( falzy( child ) || !protype( child, FUNCTION ) ){
 		throw new Error( "invalid child" );
 	}
 
-	if( !protype( parent, FUNCTION ) ){
+	if( falzy( parent ) || !protype( parent, FUNCTION ) ){
 		throw new Error( "invalid parent" );
 	}
 
-	if( !protype( child.prototype, OBJECT ) ){
+	if( falzy( child.prototype ) || !protype( child.prototype, OBJECT ) ){
 		throw new Error( "child must have a prototype" );
 	}
 
-	if( !protype( parent.prototype, OBJECT ) ){
+	if( falzy( parent.prototype ) || !protype( parent.prototype, OBJECT ) ){
 		throw new Error( "parent must have a prototype" );
 	}
 
+	cacheMethod( child );
+	cacheMethod( parent );
 
+	let childTree = wauker( child );
+	let parentTree = wauker( parent );
 
-	let connector = wichevr( child.connector, connect( ) );
-
-	/*;
-		@note:
-			Rename the connector to make it look like the child.
-		@end-note
-	*/
-	if( connector.name !== child.name ){
-		ate( "name", child.name, connector );
-	}
-
-	/*;
-		@note:
-			Inherit the parent to the connector.
-		@end-note
-	*/
-	connector.prototype = Object.create( parent.prototype, {
-		"constructor": {
-			"value": parent,
-			"enumerable": false,
-			"writable": true,
-			"configurable": false
-		}
-	} );
-
-	/*;
-		@note:
-			Attach the parent to the connector.
-		@end-note
-	*/
-	connector.prototype.parent = parent;
-
-	let cache = { };
-	Object.getOwnPropertyNames( child.prototype ).forEach( ( property ) => {
-		/*;
-			@note:
-				We will not cache constants, and non-functions.
-			@end-note
-		*/
-		if( !( /^[A-Z_][A-Z0-9_]+$/ ).test( property ) &&
-			protype( child.prototype[ property ], FUNCTION ) )
-		{
-			/*;
-				@note:
-					We need to do this because we don't want to override the child prototype.
-				@end-note
-			*/
-			cache[ property ] = child.prototype[ property ];
-		}
-	} );
-
-	/*;
-		@note:
-			Inherit from the connector. This will override the prototype.
-		@end-note
-	*/
-	child.prototype = Object.create( connector.prototype, {
-		"constructor": {
-			"value": child,
-			"enumerable": false,
-			"writable": true,
-			"configurable": false
-		}
-	} );
-
-	/*;
-		@note:
-			Transfer the cached properties back to the child.
-		@end-note
-	*/
-	Object.getOwnPropertyNames( cache ).forEach( ( property ) => {
-		child.prototype[ property ] = cache[ property ];
-	} );
-
-	harden( "connector", connector, child );
-	let inheritance = connector.inheritance = wichevr( connector.inheritance, [ ] );
-	if( !een( inheritance, parent ) ){
-		connector.inheritance.push( parent );
-	}
+	inherit( child, parent, connect( ) );
 
 	return child;
 };
