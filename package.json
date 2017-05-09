@@ -7,10 +7,10 @@
   "deploy": "heredito.deploy.js",
   "browser": "heredito.deploy.js",
   "scripts": {
-	"build:connect": "babel connect.module.js --out-file connect.js --source-maps",
-	"build:inherit": "babel inherit.module.js --out-file inherit.js --source-maps",
-	"build:heredito": "babel heredito.js --out-file heredito.support.js --source-maps",
-	"build:all": "npm run build:connect && npm run build:inherit && npm run build:heredito",
+    "build:connect": "babel connect.module.js --out-file connect.js --source-maps",
+    "build:inherit": "babel inherit.module.js --out-file inherit.js --source-maps",
+    "build:heredito": "babel heredito.js --out-file heredito.support.js --source-maps",
+    "build:all": "npm run build:connect && npm run build:inherit && npm run build:heredito",
     "build": "npm run build:all && webpack --progress --display-modules",
     "test": "mocha heredito-test.js"
   },
@@ -32,5 +32,36 @@
   "bugs": {
     "url": "https://github.com/volkovasystems/heredito/issues"
   },
-  "homepage": "https://github.com/volkovasystems/heredito#readme"
+  "homepage": "https://github.com/volkovasystems/heredito#readme",
+  "dependencies": {
+    "apiqe": "^0.0.0",
+    "babel-runtime": "^6.23.0",
+    "budge": "^0.26.0",
+    "clazof": "^0.26.0",
+    "diatom": "^0.26.0",
+    "een": "^0.18.0",
+    "falzy": "^0.19.0",
+    "harden": "^0.21.0",
+    "kein": "^0.24.0",
+    "leveld": "^0.3.0",
+    "metod": "^0.6.0",
+    "meton": "^0.0.0",
+    "posp": "^0.1.0",
+    "protype": "^0.21.0",
+    "reclas": "^0.3.0",
+    "sepby": "^0.1.0",
+    "statis": "^0.6.0",
+    "transpher": "^0.23.0",
+    "truly": "^0.18.0",
+    "wauker": "^0.13.0",
+    "x10cv": "^0.5.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.24.1",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-latest": "^6.24.1",
+    "source-map-loader": "^0.2.1",
+    "webpack": "^2.5.0"
+  }
 }

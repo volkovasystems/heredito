@@ -51,29 +51,63 @@
 
 	@include:
 		{
+			"clazof": "clazof",
 			"diatom": "diatom",
 			"een": "een",
 			"falzy": "falzy",
+			"kein": "kein",
+			"meton": "meton",
+			"posp": "posp",
 			"protype": "protype",
-			"statis": "statis"
+			"statis": "statis",
+			"transpher": "transpher",
+			"truly": "truly"
 		}
 	@end-include
 */
 
+const clazof = require( "clazof" );
 const diatom = require( "diatom" );
 const een = require( "een" );
 const falzy = require( "falzy" );
+const kein = require( "kein" );
+const meton = require( "meton" );
+const posp = require( "posp" );
 const protype = require( "protype" );
 const statis = require( "statis" );
+const transpher = require( "transpher" );
+const truly = require( "truly" );
 
 const INHERITANCE = Symbol( "inheritance" );
+const CHILD = Symbol( "child" );
 
 const connect = function connect( ){
 	let Connector = diatom( "Connector" );
 
 	statis( Connector )
+
 		.attach( INHERITANCE, [ ] )
-		.attach( "push", function push( parent ){
+
+		.implement( "flush", function flush( ){
+			while( this[ INHERITANCE ].length ){
+				this[ INHERITANCE ].pop( );
+			}
+
+			return this;
+		} )
+
+		.implement( "reset", function reset( ){
+			posp( meton( this.prototype ), "constructor" )
+				.forEach( ( method ) => ( delete this.prototype[ method ] ) )
+
+			this.flush( );
+
+			delete this[ CHILD ];
+
+			return this;
+		} )
+
+		.implement( "push", function push( parent ){
 			/*;
 				@meta-configuration:
 					{
@@ -81,12 +115,9 @@ const connect = function connect( ){
 					}
 				@end-meta-configuration
 			*/
+
 			if( falzy( parent ) || !protype( parent, FUNCTION ) ){
 				throw new Error( "invalid parent class" );
-			}
-
-			if( !een( Connector[ INHERITANCE ], parent ) ){
-				Connector[ INHERITANCE ].push( parent );
 			}
 
 			/*;
@@ -94,11 +125,54 @@ const connect = function connect( ){
 					Accumulate parent to the connector.
 				@end-note
 			*/
-			while( truly( parent = parent.prototype.parent ) ){
-				Connector.push( parent );
+			do{
+				if( !een( this[ INHERITANCE ], parent ) ){
+					this[ INHERITANCE ].push( parent );
+				}
+
+			}while( truly( parent = parent.prototype.parent ) );
+
+			return this;
+		} )
+
+		.implement( "trace", function trace( parent ){
+			/*;
+				@meta-configuration:
+					{
+						"parent:required": "function"
+					}
+				@end-meta-configuration
+			*/
+
+			if( falzy( parent ) || !protype( parent, FUNCTION ) ){
+				throw new Error( "invalid parent class" );
 			}
 
-			return Connector;
+			if( kein( "connector", parent ) && clazof( parent.connector, "Connector" ) ){
+				parent.connector[ INHERITANCE ].forEach( ( ancestor ) => this.push( ancestor ) );
+			}
+
+			return this;
+		} )
+
+		.implement( "register", function register( child ){
+			/*;
+				@meta-configuration:
+					{
+						"child:required": "function"
+					}
+				@end-meta-configuration
+			*/
+
+			if( falzy( child ) || !protype( child, FUNCTION ) ){
+				throw new Error( "invalid child class" );
+			}
+
+			transpher( this, child, true );
+
+			this[ CHILD ] = child;
+
+			return this;
 		} );
 
 	return Connector;

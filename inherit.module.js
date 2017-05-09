@@ -51,11 +51,21 @@
 
 	@include:
 		{
+			"clazof": "clazof",
 			"falzy": "falzy",
+			"metod": "metod",
+			"posp": "posp",
 			"protype": "protype"
 		}
 	@end-include
 */
+
+const clazof = require( "clazof" );
+const falzy = require( "falzy" );
+const kein = require( "kein" );
+const metod = require( "metod" );
+const posp = require( "posp" );
+const protype = require( "protype" );
 
 const inherit = function inherit( child, parent, connector ){
 	/*;
@@ -83,6 +93,16 @@ const inherit = function inherit( child, parent, connector ){
 		throw new Error( "invalid connector" );
 	}
 
+	if( kein( "connector", parent ) && clazof( parent.connector, "Connector" ) ){
+		parent.connector.flush( );
+	}
+
+	if( kein( "connector", child ) && clazof( child.connector, "Connector" ) ){
+		connector = child.connector;
+
+		connector.reset( );
+	}
+
 	/*;
 		@note:
 			Inherit the parent to the connector.
@@ -93,7 +113,7 @@ const inherit = function inherit( child, parent, connector ){
 			"value": parent,
 			"enumerable": false,
 			"writable": true,
-			"configurable": false
+			"configurable": true
 		}
 	} );
 
@@ -104,24 +124,8 @@ const inherit = function inherit( child, parent, connector ){
 	*/
 	connector.prototype.parent = parent;
 
-	let cache = { };
-	Object.getOwnPropertyNames( child.prototype ).forEach( ( property ) => {
-		/*;
-			@note:
-				We will not cache constants, and non-functions.
-			@end-note
-		*/
-		if( !( /^[A-Z_][A-Z0-9_]+$/ ).test( property ) &&
-			protype( child.prototype[ property ], FUNCTION ) )
-		{
-			/*;
-				@note:
-					We need to do this because we don't want to override the child prototype.
-				@end-note
-			*/
-			cache[ property ] = child.prototype[ property ];
-		}
-	} );
+	let cache = [ ];
+	posp( metod( child.prototype ), "constructor" ).forEach( ( method ) => cache.push( method ) );
 
 	/*;
 		@note:
@@ -133,7 +137,7 @@ const inherit = function inherit( child, parent, connector ){
 			"value": child,
 			"enumerable": false,
 			"writable": true,
-			"configurable": false
+			"configurable": true
 		}
 	} );
 
@@ -142,14 +146,12 @@ const inherit = function inherit( child, parent, connector ){
 			Transfer the cached properties back to the child.
 		@end-note
 	*/
-	Object.getOwnPropertyNames( cache ).forEach( ( property ) => {
-		child.prototype[ property ] = cache[ property ];
-	} );
+	cache.forEach( ( method ) => ( child.prototype[ method.name ] = method ) );
 
 	child.connector = connector;
 	child.parent = parent;
 
-	child.connector.push( parent );
+	connector.register( child ).push( parent ).trace( parent );
 
 	return child;
 };

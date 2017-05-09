@@ -1,9 +1,25 @@
 yarn add \
 babel-runtime \
-arkount \
-ate \
+apiqe \
+budge \
+clazof \
+diatom \
+een \
+falzy \
+harden \
+kein \
+leveld \
+metod \
+meton \
+posp \
 protype \
-raze \
+reclas \
+sepby \
+statis \
+transpher \
+truly \
+wauker \
+x10cv \
 --save && \
 yarn add \
 babel-cli \
@@ -14,9 +30,25 @@ source-map-loader \
 webpack \
 --dev && \
 bower install \
-arkount \
-ate \
+apiqe \
+budge \
+clazof \
+diatom \
+een \
+falzy \
+harden \
+kein \
+leveld \
+metod \
+meton \
+posp \
 protype \
-raze \
+reclas \
+sepby \
+statis \
+transpher \
+truly \
+wauker \
+x10cv \
 --save \
 --force-latest

@@ -49,52 +49,31 @@
 
 	@include:
 		{
-			"ate": "ate",
-			"een": "een",
-			"harden": "harden",
+			"apiqe": "apiqe",
+			"budge": "budge",
+			"falzy": "falzy",
+			"leveld": "leveld",
 			"protype": "protype",
-			"wichevr": "wichevr"
+			"reclas": "reclas",
+			"sepby": "sepby",
+			"wauker": "wauker",
+			"x10cv": "x10cv"
 		}
 	@end-include
 */
 
-const ate = require( "ate" );
-const harden = require( "harden" );
+const apiqe = require( "apiqe" );
+const budge = require( "budge" );
+const falzy = require( "falzy" );
+const leveld = require( "leveld" );
 const protype = require( "protype" );
-const wichevr = require( "wichevr" );
+const reclas = require( "reclas" );
+const sepby = require( "sepby" );
+const wauker = require( "wauker" );
+const x10cv = require( "x10cv" );
 
 const connect = require( "./connect.js" );
 const inherit = require( "./inherit.js" );
-
-const METHOD_CACHE = Symbol( "method-cache" );
-
-const cacheMethod = function cacheMethod( blueprint ){
-	/*;
-		@meta-configuration:
-			{
-				"blueprint:required": "function"
-			}
-		@end-meta-configuration
-	*/
-
-	if( falzy( blueprint ) || !protype( blueprint, FUNCTION ) ){
-		throw new Error( "invalid blueprint" );
-	}
-
-	let cache = wichis( blueprint[ METHOD_CACHE ], [ ] );
-	harden( METHOD_CACHE, cache, blueprint );
-
-	if( arid( cache ) ){
-		metis( blueprint.prototype ).forEach( ( method ) => nsrt( cache, method ) );
-	}
-
-	Object.getOwnPropertyNames( blueprint.prototype )
-		.forEach( ( property ) => ( !( /^[A-Z_][A-Z0-9_]+$/ ).test( property ) &&
-			protype( blueprint.prototype[ property ], FUNCTION ) &&
-			nsrt( cache, blueprint.prototype[ property ] ) ) );
-
-	return blueprint;
-};
 
 const heredito = function heredito( child, parent ){
 	/*;
@@ -118,23 +97,20 @@ const heredito = function heredito( child, parent ){
 		throw new Error( "invalid parent" );
 	}
 
-	if( falzy( child.prototype ) || !protype( child.prototype, OBJECT ) ){
-		throw new Error( "child must have a prototype" );
-	}
+	parent = leveld( budge( arguments )
+		.filter( ( parameter ) => protype( parameter, FUNCTION ) ).map( wauker ) )
+		.map( ( blueprint ) => reclas( blueprint ) );
 
-	if( falzy( parent.prototype ) || !protype( parent.prototype, OBJECT ) ){
-		throw new Error( "parent must have a prototype" );
-	}
+	console.log( "PARENT: ", parent );
 
-	cacheMethod( child );
-	cacheMethod( parent );
+	child = wauker( child ).map( ( blueprint ) => reclas( blueprint ) );
 
-	let childTree = wauker( child );
-	let parentTree = wauker( parent );
+	let tree = apiqe( [ child[ 0 ] ], parent.concat( budge( child ) ) ).reverse( );
 
-	inherit( child, parent, connect( ) );
+	console.log( tree );
 
-	return child;
+	return sepby( tree, ( blueprint ) => x10cv( blueprint ) )
+		.reduce( ( parent, child ) => inherit( child, parent, connect( ) ) );
 };
 
 module.exports = heredito;
