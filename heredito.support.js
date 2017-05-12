@@ -51,9 +51,12 @@
               		{
               			"apiqe": "apiqe",
               			"budge": "budge",
+              			"dictate": "dictate",
               			"falzy": "falzy",
+              			"firs": "firs",
               			"leveld": "leveld",
               			"protype": "protype",
+              			"rder": "rder",
               			"reclas": "reclas",
               			"sepby": "sepby",
               			"wauker": "wauker",
@@ -64,9 +67,12 @@
 
 var apiqe = require("apiqe");
 var budge = require("budge");
+var dictate = require("dictate");
 var falzy = require("falzy");
+var firs = require("firs");
 var leveld = require("leveld");
 var protype = require("protype");
+var rder = require("rder");
 var reclas = require("reclas");
 var sepby = require("sepby");
 var wauker = require("wauker");
@@ -97,15 +103,17 @@ var heredito = function heredito(child, parent) {
 		throw new Error("invalid parent");
 	}
 
-	parent = leveld(budge(arguments).
-	filter(function (parameter) {return protype(parameter, FUNCTION);}).map(wauker)).
-	map(function (blueprint) {return reclas(blueprint);});
+	parent = budge(arguments).filter(function (parameter) {return protype(parameter, FUNCTION);});
+
+	var order = rder(parent, "name");
+
+	parent = leveld(parent.map(wauker)).map(function (blueprint) {return reclas(blueprint);});
 
 	child = wauker(child).map(function (blueprint) {return reclas(blueprint);});
 
-	var tree = apiqe([child[0]], parent.concat(budge(child))).reverse();
+	parent = dictate(parent.concat(budge(child)), order, "name");
 
-	console.log(tree);
+	var tree = apiqe(firs(child), parent).reverse();
 
 	return sepby(tree, function (blueprint) {return x10cv(blueprint);}).
 	reduce(function (parent, child) {return inherit(child, parent, connect());});

@@ -4,8 +4,10 @@ apiqe \
 budge \
 clazof \
 diatom \
+dictate \
 een \
 falzy \
+firs \
 harden \
 kein \
 leveld \
@@ -13,6 +15,7 @@ metod \
 meton \
 posp \
 protype \
+rder \
 reclas \
 sepby \
 statis \
@@ -34,8 +37,10 @@ apiqe \
 budge \
 clazof \
 diatom \
+dictate \
 een \
 falzy \
+firs \
 harden \
 kein \
 leveld \
@@ -43,6 +48,7 @@ metod \
 meton \
 posp \
 protype \
+rder \
 reclas \
 sepby \
 statis \

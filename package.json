@@ -34,27 +34,30 @@
   },
   "homepage": "https://github.com/volkovasystems/heredito#readme",
   "dependencies": {
-    "apiqe": "^0.0.0",
+    "apiqe": "^0.1.0",
     "babel-runtime": "^6.23.0",
-    "budge": "^0.26.0",
-    "clazof": "^0.26.0",
-    "diatom": "^0.26.0",
+    "budge": "^0.28.0",
+    "clazof": "^0.27.0",
+    "diatom": "^0.27.0",
+    "dictate": "^0.15.0",
     "een": "^0.18.0",
     "falzy": "^0.19.0",
+    "firs": "^0.0.0",
     "harden": "^0.21.0",
-    "kein": "^0.24.0",
-    "leveld": "^0.3.0",
-    "metod": "^0.6.0",
+    "kein": "^0.25.0",
+    "leveld": "^0.4.0",
+    "metod": "^0.7.0",
     "meton": "^0.0.0",
-    "posp": "^0.1.0",
+    "posp": "^0.2.0",
     "protype": "^0.21.0",
-    "reclas": "^0.3.0",
-    "sepby": "^0.1.0",
-    "statis": "^0.6.0",
-    "transpher": "^0.23.0",
+    "rder": "^0.0.0",
+    "reclas": "^0.5.0",
+    "sepby": "^0.2.0",
+    "statis": "^0.8.0",
+    "transpher": "^0.25.0",
     "truly": "^0.18.0",
-    "wauker": "^0.13.0",
-    "x10cv": "^0.5.0"
+    "wauker": "^0.14.0",
+    "x10cv": "^0.6.0"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
@@ -62,6 +65,6 @@
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-latest": "^6.24.1",
     "source-map-loader": "^0.2.1",
-    "webpack": "^2.5.0"
+    "webpack": "^2.5.1"
   }
 }

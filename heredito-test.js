@@ -1,55 +1,61 @@
 
-const clazof = require( "clazof" );
+const assert = require( "assert" );
 const heredito = require( "./heredito.js" );
-const util = require( "util" );
-const wauker = require( "wauker" );
 
 let ClassA = function ClassA( ){ };
-ClassA.prototype.setA = function setA( ){
-	console.log( "set A" );
-
-	return this;
+ClassA.prototype.testA = function testA( ){
+	return `test A, ${ this.constructor.name }`;
 };
 
 let ClassB = function ClassB( ){ };
-ClassB.prototype.setB = function setB( ){
-	console.log( "set B" );
-
-	return this;
+ClassB.prototype.testB = function testB( ){
+	return `test B, ${ this.constructor.name }`;
 };
 
 let ClassC = function ClassC( ){ };
-ClassC.prototype.setC = function setC( ){
-	console.log( "set C" );
-
-	return this;
+ClassC.prototype.testC = function testC( ){
+	return `test C, ${ this.constructor.name }`;
 };
 
 let ClassD = function ClassD( ){ };
-ClassD.prototype.setD = function setD( ){
-	console.log( "set D" );
-
-	return this;
+ClassD.prototype.testD = function testD( ){
+	return `test D, ${ this.constructor.name }`;
 };
 
 ClassA = heredito( ClassA, ClassB );
-console.log( clazof( ClassA( ), ClassD ) );
+
+assert.equal( ClassA instanceof ClassB, true, "should be true" );
+
+assert.equal( ClassA( ) instanceof ClassB, true, "should be true" );
+
+assert.equal( ClassA( ).testB( ), "test B, ClassA", "should be equal" );
 
 ClassC = heredito( ClassC, ClassD );
-console.log( clazof( ClassC( ), ClassD ) );
 
-ClassA( ).setA( );
-ClassA( ).setB( );
+assert.equal( ClassC instanceof ClassC, true, "should be true" );
 
-ClassA = heredito( ClassA, ClassC );
-ClassA( ).setA( );
-ClassA( ).setB( );
-ClassA( ).setC( );
-ClassA( ).setD( );
-console.log( clazof( ClassA( ), ClassD ) );
+assert.equal( ClassC( ) instanceof ClassC, true, "should be true" );
+
+assert.equal( ClassC( ).testD( ), "test D, ClassC", "should be equal" );
+
+ClassB = heredito( ClassB, ClassD );
 
 ClassC = heredito( ClassC, ClassA, ClassB, ClassD );
-ClassC( ).setA( );
-console.log( clazof( ClassC( ), ClassD ) );
 
-console.log( ClassC );
+assert.equal( ClassC instanceof ClassA, true, "should be true" );
+
+assert.equal( ClassC instanceof ClassB, true, "should be true" );
+
+assert.equal( ClassC instanceof ClassD, true, "should be true" );
+
+assert.equal( ClassC instanceof ClassC, true, "should be true" );
+
+assert.equal( ClassC( ) instanceof ClassA, true, "should be true" );
+
+assert.equal( ClassC( ) instanceof ClassB, true, "should be true" );
+
+assert.equal( ClassC( ) instanceof ClassD, true, "should be true" );
+
+assert.equal( ClassC( ) instanceof ClassC, true, "should be true" );
+
+console.log( "ok" );
