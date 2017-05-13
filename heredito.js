@@ -44,218 +44,79 @@
 	@end-module-configuration
 
 	@module-documentation:
-		This is just a copy of NodeJS util.heredito method.
-
-		With additional enhancements.
-			1. Use parent instead of super reserved word for better usage.
-			2. Has backward compatibility.
-			3. A dummy class is inserted between child and parent.
-				3.1. Prototype properties can be shared even before declaration.
-				3.2. Prototype properties is overriden through dummy class.
-
-		Please refer to their documentation.
-		@link:https://nodejs.org/api/util.html#util_util_inherits_constructor_superconstructor
+		Extensive inheritance.
 	@end-module-documentation
 
 	@include:
 		{
-			"arkount": "arkount",
-			"ate": "ate",
+			"apiqe": "apiqe",
+			"budge": "budge",
+			"dictate": "dictate",
+			"falzy": "falzy",
+			"firs": "firs",
+			"leveld": "leveld",
 			"protype": "protype",
-			"raze": "raze"
+			"rder": "rder",
+			"reclas": "reclas",
+			"sepby": "sepby",
+			"wauker": "wauker",
+			"x10cv": "x10cv"
 		}
 	@end-include
 */
 
-//: @support-module:
-	//: @reference: https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Object/create
-	"function"!=typeof Object.create&&(Object.create=function(t){var e=function(){};
-	return function(n,r){if(n!==Object(n)&&null!==n)throw TypeError("Argument must be an object, or null");
-	e.prototype=n||{};var o=new e;return e.prototype=null,r!==t&&Object.defineProperties(o,r),
-	null===n&&(o.__proto__=null),o}}());
-//: @end-support-module
+const apiqe = require( "apiqe" );
+const budge = require( "budge" );
+const dictate = require( "dictate" );
+const falzy = require( "falzy" );
+const firs = require( "firs" );
+const leveld = require( "leveld" );
+const protype = require( "protype" );
+const rder = require( "rder" );
+const reclas = require( "reclas" );
+const sepby = require( "sepby" );
+const wauker = require( "wauker" );
+const x10cv = require( "x10cv" );
 
-const arkount = require( "arkount" );
-const ate = require( "ate" );
-const protype = require( "protype" )
-const raze = require( "raze" );
+const connect = require( "./connect.js" );
+const inherit = require( "./inherit.js" );
 
 const heredito = function heredito( child, parent ){
 	/*;
 		@meta-configuration:
 			{
 				"child:required": "function",
-				"parent:required": "function"
+				"parent:required": [
+					"function",
+					"[function]",
+					"...function"
+				]
 			}
 		@end-meta-configuration
 	*/
 
-	if( !protype( child, FUNCTION ) ){
+	if( falzy( child ) || !protype( child, FUNCTION ) ){
 		throw new Error( "invalid child" );
 	}
 
-	if( !protype( parent, FUNCTION ) ){
+	if( falzy( parent ) || !protype( parent, FUNCTION ) ){
 		throw new Error( "invalid parent" );
 	}
 
-	if( !protype( child.prototype, OBJECT ) ){
-		throw new Error( "child must have a prototype" );
-	}
+	parent = budge( arguments ).filter( ( parameter ) => protype( parameter, FUNCTION ) );
 
-	if( !protype( parent.prototype, OBJECT ) ){
-		throw new Error( "parent must have a prototype" );
-	}
+	let order = rder( parent, "name" );
 
-	let connector = function connector( ){ };
-	//: Rename the connector to make it look like the child.
-	ate( "name", child.name, connector );
+	parent = leveld( parent.map( wauker ) ).map( ( blueprint ) => reclas( blueprint ) );
 
-	//: Inherit the parent.
-	connector.prototype = Object.create( parent.prototype, {
-		"constructor": {
-			"value": parent,
-			"enumerable": false,
-			"writable": true,
-			"configurable": false
-		}
-	} );
+	child = wauker( child ).map( ( blueprint ) => reclas( blueprint ) );
 
-	//: Attach the parent to the connector.
-	connector.prototype.parent = parent;
+	parent = dictate( parent.concat( budge( child ) ), order, "name" );
 
-	let childCache = { };
-	let childProperty = Object.getOwnPropertyNames( child.prototype );
-	let childPropertyLength = childProperty.length;
-	for( let index = 0; index < childPropertyLength; index++ ){
-		let property = childProperty[ index ];
+	let tree = apiqe( firs( child ), parent ).reverse( );
 
-		/*;
-			@note:
-				We will not cache constants, and non-functions.
-			@end-note
-		*/
-		if( !( /^[A-Z_][A-Z0-9_]+$/ ).test( property ) &&
-			protype( child.prototype[ property ], FUNCTION ) &&
-			child.prototype.hasOwnProperty( property ) )
-		{
-			/*;
-				@note:
-					We need to do this because we don't want to override the child prototype.
-				@end-note
-			*/
-			childCache[ property ] = child.prototype[ property ];
-		}
-	}
-
-	child.prototype = Object.create( connector.prototype, {
-		"constructor": {
-			"value": child,
-			"enumerable": false,
-			"writable": true,
-			"configurable": false
-		}
-	} );
-
-	//: Transfer the cached properties back to the child.
-	for( let property in childCache ){
-		child.prototype[ property ] = childCache[ property ];
-	}
-
-	child.prototype.root = function root( depth ){
-		let ancestor = [ ];
-
-		let parent = this.constructor.prototype.parent;
-		while( parent ){
-			ancestor.push( parent );
-
-			parent = parent.prototype.parent;
-		}
-
-		if( depth >= arkount( ancestor ) || depth < 0 ){
-			throw new Error( "root overflow" );
-		}
-
-		ancestor = ancestor.reverse( )[ depth ];
-
-		let scope = { };
-		let ancestorProperty = Object.getOwnPropertyNames( ancestor.prototype );
-		ancestorProperty.forEach( ( function onEachProperty( method ){
-			if( method != "constructor" &&
-				method != "parent" &&
-				method != "level" &&
-				protype( ancestor.prototype[ method ], FUNCTION ) )
-			{
-				let procedure = ancestor.prototype[ method ];
-
-				let delegate = ( function delegate( ){
-					let result = procedure.apply( this, raze( arguments ) );
-
-					if( result !== this ){
-						return result;
-					}
-
-					return this;
-				} ).bind( this );
-
-				ate( "name", method, delegate );
-
-				scope[ method ] = delegate;
-			}
-		} ).bind( this ) );
-
-		return scope;
-	};
-
-	child.prototype.level = function level( depth ){
-		let ancestor = parent;
-
-		if( depth < 0 ){
-			throw new Error( "invalid level" );
-
-		}else if( depth == 0 ){
-			return this;
-
-		}else{
-			for( let index = 1; index < depth; index++ ){
-				if( ancestor.prototype.parent ){
-					ancestor = ancestor.prototype.parent;
-
-				}else{
-					throw new Error( "level overflow" );
-				}
-			}
-		}
-
-		let scope = { };
-		let ancestorProperty = Object.getOwnPropertyNames( ancestor.prototype );
-		ancestorProperty.forEach( ( function onEachProperty( method ){
-			if( method != "constructor" &&
-				method != "parent" &&
-				method != "level" &&
-				protype( ancestor.prototype[ method ], FUNCTION ) )
-			{
-				let procedure = ancestor.prototype[ method ];
-
-				let delegate = ( function delegate( ){
-					let result = procedure.apply( this, raze( arguments ) );
-
-					if( result !== this ){
-						return result;
-					}
-
-					return this;
-				} ).bind( this );
-
-				ate( "name", method, delegate );
-
-				scope[ method ] = delegate;
-			}
-		} ).bind( this ) );
-
-		return scope;
-	};
-
-	return child;
+	return sepby( tree, ( blueprint ) => x10cv( blueprint ) )
+		.reduce( ( parent, child ) => inherit( child, parent, connect( ) ) );
 };
 
 module.exports = heredito;
