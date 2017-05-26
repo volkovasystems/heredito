@@ -1,6 +1,6 @@
 {
   "name": "heredito",
-  "version": "0.29.0",
+  "version": "0.30.0",
   "main": "heredito.deploy.js",
   "support": "heredito.support.js",
   "homepage": "https://github.com/volkovasystems/heredito",
@@ -44,7 +44,7 @@
     "posp": "^0.5.0",
     "protype": "^0.21.0",
     "rder": "^0.0.0",
-    "reclas": "^0.9.0",
+    "reclas": "^0.10.0",
     "sepby": "^0.4.0",
     "statis": "^0.11.0",
     "transpher": "^0.26.0",
