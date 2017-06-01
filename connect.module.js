@@ -54,9 +54,12 @@
 			"clazof": "clazof",
 			"diatom": "diatom",
 			"een": "een",
+			"erode": "erode",
 			"falzy": "falzy",
 			"kein": "kein",
 			"meton": "meton",
+			"ngrave": "ngrave",
+			"ntrprt": "ntrprt",
 			"protype": "protype",
 			"statis": "statis",
 			"transpher": "transpher",
@@ -68,9 +71,12 @@
 const clazof = require( "clazof" );
 const diatom = require( "diatom" );
 const een = require( "een" );
+const erode = require( "erode" );
 const falzy = require( "falzy" );
 const kein = require( "kein" );
 const meton = require( "meton" );
+const ngrave = require( "ngrave" );
+const ntrprt = require( "ntrprt" );
 const protype = require( "protype" );
 const statis = require( "statis" );
 const transpher = require( "transpher" );
@@ -87,8 +93,10 @@ const connect = function connect( ){
 		.attach( INHERITANCE, [ ] )
 
 		.implement( "flush", function flush( ){
-			while( this[ INHERITANCE ].length ){
-				this[ INHERITANCE ].pop( );
+			let inheritance = ntrprt( INHERITANCE, this );
+
+			while( inheritance.length ){
+				inheritance.pop( );
 			}
 
 			return this;
@@ -99,7 +107,7 @@ const connect = function connect( ){
 
 			this.flush( );
 
-			delete this[ CHILD ];
+			erode( CHILD, this );
 
 			return this;
 		} )
@@ -117,14 +125,16 @@ const connect = function connect( ){
 				throw new Error( "invalid parent class" );
 			}
 
+			let inheritance = ntrprt( INHERITANCE, this );
+
 			/*;
 				@note:
 					Accumulate parent to the connector.
 				@end-note
 			*/
 			do{
-				if( !een( this[ INHERITANCE ], parent ) ){
-					this[ INHERITANCE ].push( parent );
+				if( !een( inheritance, parent ) ){
+					inheritance.push( parent );
 				}
 
 			}while( truly( parent = parent.prototype.parent ) );
@@ -146,7 +156,7 @@ const connect = function connect( ){
 			}
 
 			if( kein( "connector", parent ) && clazof( parent.connector, "Connector" ) ){
-				parent.connector[ INHERITANCE ].forEach( ( ancestor ) => this.push( ancestor ) );
+				ntrprt( INHERITANCE, parent.connector ).forEach( ( ancestor ) => this.push( ancestor ) );
 			}
 
 			return this;
@@ -167,7 +177,7 @@ const connect = function connect( ){
 
 			transpher( this, child, true );
 
-			this[ CHILD ] = child;
+			ngrave( CHILD, this, child );
 
 			return this;
 		} );

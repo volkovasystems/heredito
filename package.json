@@ -1,17 +1,13 @@
 {
   "name": "heredito",
-  "version": "0.31.0",
+  "version": "0.32.0",
   "description": "Extensive inheritance.",
   "main": "heredito.js",
   "support": "heredito.support.js",
   "deploy": "heredito.deploy.js",
   "browser": "heredito.deploy.js",
   "scripts": {
-    "build:connect": "babel connect.module.js --out-file connect.js --source-maps",
-    "build:inherit": "babel inherit.module.js --out-file inherit.js --source-maps",
-    "build:heredito": "babel heredito.js --out-file heredito.support.js --source-maps",
-    "build:all": "npm run build:connect && npm run build:inherit && npm run build:heredito",
-    "build": "npm run build:all && webpack --progress --display-modules",
+    "build": "gulp && webpack --progress --display-modules",
     "test": "mocha heredito-test.js"
   },
   "repository": {
@@ -41,6 +37,7 @@
     "diatom": "^0.28.0",
     "dictate": "^0.17.0",
     "een": "^0.18.0",
+    "erode": "^0.0.0",
     "falzy": "^0.19.0",
     "firs": "^0.0.0",
     "harden": "^0.21.0",
@@ -48,6 +45,8 @@
     "leveld": "^0.4.0",
     "metod": "^0.8.0",
     "meton": "^0.1.0",
+    "ngrave": "^0.2.0",
+    "ntrprt": "^0.0.0",
     "protype": "^0.21.0",
     "rder": "^0.0.0",
     "reclas": "^0.11.0",
@@ -63,6 +62,14 @@
     "babel-core": "^6.24.1",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-latest": "^6.24.1",
+    "del": "^2.2.2",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
+    "gulp-debug": "^3.1.0",
+    "gulp-plumber": "^1.1.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-replace": "^0.5.4",
+    "gulp-sourcemaps": "^2.6.0",
     "source-map-loader": "^0.2.1",
     "webpack": "^2.6.1"
   }

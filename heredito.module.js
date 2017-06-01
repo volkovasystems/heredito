@@ -83,7 +83,10 @@ const connect = require( "./connect.js" );
 const inherit = require( "./inherit.js" );
 //: @end-server
 
-
+//: @client:
+const connect = require( "./connect.support.js" );
+const inherit = require( "./inherit.support.js" );
+//: @end-client
 
 const heredito = function heredito( child, parent ){
 	/*;
