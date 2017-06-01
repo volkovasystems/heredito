@@ -53,8 +53,8 @@
               		{
               			"clazof": "clazof",
               			"falzy": "falzy",
+              			"kein": "kein",
               			"metod": "metod",
-              			"posp": "posp",
               			"protype": "protype"
               		}
               	@end-include
@@ -64,7 +64,6 @@ var clazof = require("clazof");
 var falzy = require("falzy");
 var kein = require("kein");
 var metod = require("metod");
-var posp = require("posp");
 var protype = require("protype");
 
 var inherit = function inherit(child, parent, connector) {
@@ -125,13 +124,13 @@ var inherit = function inherit(child, parent, connector) {
 	connector.prototype.parent = parent;
 
 	var cache = [];
-	posp(metod(child.prototype), "constructor").forEach(function (method) {return cache.push(method);});
+	metod(child.prototype).forEach(function (method) {return cache.push(method);});
 
 	/*;
-                                                                                                      	@note:
-                                                                                                      		Inherit from the connector. This will override the prototype.
-                                                                                                      	@end-note
-                                                                                                      */
+                                                                                 	@note:
+                                                                                 		Inherit from the connector. This will override the prototype.
+                                                                                 	@end-note
+                                                                                 */
 	child.prototype = (0, _create2.default)(connector.prototype, {
 		"constructor": {
 			"value": child,

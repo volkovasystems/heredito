@@ -53,8 +53,8 @@
 		{
 			"clazof": "clazof",
 			"falzy": "falzy",
+			"kein": "kein",
 			"metod": "metod",
-			"posp": "posp",
 			"protype": "protype"
 		}
 	@end-include
@@ -64,7 +64,6 @@ const clazof = require( "clazof" );
 const falzy = require( "falzy" );
 const kein = require( "kein" );
 const metod = require( "metod" );
-const posp = require( "posp" );
 const protype = require( "protype" );
 
 const inherit = function inherit( child, parent, connector ){
@@ -125,7 +124,7 @@ const inherit = function inherit( child, parent, connector ){
 	connector.prototype.parent = parent;
 
 	let cache = [ ];
-	posp( metod( child.prototype ), "constructor" ).forEach( ( method ) => cache.push( method ) );
+	metod( child.prototype ).forEach( ( method ) => cache.push( method ) );
 
 	/*;
 		@note:

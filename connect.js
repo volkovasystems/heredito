@@ -57,7 +57,6 @@
               			"falzy": "falzy",
               			"kein": "kein",
               			"meton": "meton",
-              			"posp": "posp",
               			"protype": "protype",
               			"statis": "statis",
               			"transpher": "transpher",
@@ -72,7 +71,6 @@ var een = require("een");
 var falzy = require("falzy");
 var kein = require("kein");
 var meton = require("meton");
-var posp = require("posp");
 var protype = require("protype");
 var statis = require("statis");
 var transpher = require("transpher");
@@ -97,8 +95,7 @@ var connect = function connect() {
 	}).
 
 	implement("reset", function reset() {var _this = this;
-		posp(meton(this.prototype), "constructor").
-		forEach(function (method) {return delete _this.prototype[method];});
+		meton(this.prototype).forEach(function (method) {return delete _this.prototype[method];});
 
 		this.flush();
 

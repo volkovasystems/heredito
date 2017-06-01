@@ -57,7 +57,6 @@
 			"falzy": "falzy",
 			"kein": "kein",
 			"meton": "meton",
-			"posp": "posp",
 			"protype": "protype",
 			"statis": "statis",
 			"transpher": "transpher",
@@ -72,7 +71,6 @@ const een = require( "een" );
 const falzy = require( "falzy" );
 const kein = require( "kein" );
 const meton = require( "meton" );
-const posp = require( "posp" );
 const protype = require( "protype" );
 const statis = require( "statis" );
 const transpher = require( "transpher" );
@@ -97,8 +95,7 @@ const connect = function connect( ){
 		} )
 
 		.implement( "reset", function reset( ){
-			posp( meton( this.prototype ), "constructor" )
-				.forEach( ( method ) => ( delete this.prototype[ method ] ) )
+			meton( this.prototype ).forEach( ( method ) => ( delete this.prototype[ method ] ) )
 
 			this.flush( );
 
