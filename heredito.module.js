@@ -50,7 +50,6 @@
 	@include:
 		{
 			"apiqe": "apiqe",
-			"budge": "budge",
 			"dictate": "dictate",
 			"falzy": "falzy",
 			"firs": "firs",
@@ -59,6 +58,7 @@
 			"rder": "rder",
 			"reclas": "reclas",
 			"sepby": "sepby",
+			"shft": "shft",
 			"wauker": "wauker",
 			"x10cv": "x10cv"
 		}
@@ -66,7 +66,6 @@
 */
 
 const apiqe = require( "apiqe" );
-const budge = require( "budge" );
 const dictate = require( "dictate" );
 const falzy = require( "falzy" );
 const firs = require( "firs" );
@@ -75,6 +74,7 @@ const protype = require( "protype" );
 const rder = require( "rder" );
 const reclas = require( "reclas" );
 const sepby = require( "sepby" );
+const shft = require( "shft" );
 const wauker = require( "wauker" );
 const x10cv = require( "x10cv" );
 
@@ -110,7 +110,7 @@ const heredito = function heredito( child, parent ){
 		throw new Error( "invalid parent" );
 	}
 
-	parent = budge( arguments ).filter( ( parameter ) => protype( parameter, FUNCTION ) );
+	parent = shft( arguments ).filter( ( parameter ) => protype( parameter, FUNCTION ) );
 
 	let order = rder( parent, "name" );
 
@@ -118,7 +118,7 @@ const heredito = function heredito( child, parent ){
 
 	child = wauker( child ).map( ( blueprint ) => reclas( blueprint ) );
 
-	parent = dictate( parent.concat( budge( child ) ), order, "name" );
+	parent = dictate( parent.concat( shft( child ) ), order, "name" );
 
 	let tree = apiqe( firs( child ), parent ).reverse( );
 

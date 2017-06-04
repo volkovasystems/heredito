@@ -1,7 +1,6 @@
 yarn add \
 babel-runtime \
 apiqe \
-budge \
 clazof \
 diatom \
 dictate \
@@ -20,6 +19,7 @@ protype \
 rder \
 reclas \
 sepby \
+shft \
 statis \
 transpher \
 truly \
@@ -44,7 +44,6 @@ webpack \
 --dev && \
 bower install \
 apiqe \
-budge \
 clazof \
 diatom \
 dictate \
@@ -63,6 +62,7 @@ protype \
 rder \
 reclas \
 sepby \
+shft \
 statis \
 transpher \
 truly \
