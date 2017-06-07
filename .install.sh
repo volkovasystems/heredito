@@ -21,7 +21,6 @@ reclas \
 sepby \
 shft \
 statis \
-transpher \
 truly \
 wauker \
 x10cv \
@@ -64,7 +63,6 @@ reclas \
 sepby \
 shft \
 statis \
-transpher \
 truly \
 wauker \
 x10cv \

@@ -958,6 +958,14 @@ cemento@^0.15.0:
     harden "^0.21.0"
     kount "^0.10.0"
 
+cemento@^0.16.0:
+  version "0.16.0"
+  resolved "https://registry.yarnpkg.com/cemento/-/cemento-0.16.0.tgz#f01b603b50437b182fba2478c7882d13019e3638"
+  dependencies:
+    babel-runtime "^6.23.0"
+    harden "^0.22.0"
+    kount "^0.11.0"
+
 center-align@^0.1.1:
   version "0.1.3"
   resolved "https://registry.yarnpkg.com/center-align/-/center-align-0.1.3.tgz#aa0d32629b6ee972200411cbd4461c907bc2b7ad"
@@ -1693,6 +1701,12 @@ falzy@^0.19.0:
   dependencies:
     babel-runtime "^6.23.0"
 
+falzy@^0.20.0:
+  version "0.20.0"
+  resolved "https://registry.yarnpkg.com/falzy/-/falzy-0.20.0.tgz#3835232fb4c16702cfefd240e671381a13111de8"
+  dependencies:
+    babel-runtime "^6.23.0"
+
 fancy-log@^1.1.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/fancy-log/-/fancy-log-1.3.0.tgz#45be17d02bb9917d60ccffd4995c999e6c8c9948"
@@ -2174,6 +2188,12 @@ harden@^0.21.0:
   dependencies:
     babel-runtime "^6.23.0"
 
+harden@^0.22.0:
+  version "0.22.0"
+  resolved "https://registry.yarnpkg.com/harden/-/harden-0.22.0.tgz#1bcd6cdfd8ce60726009053981b9b37875a2404b"
+  dependencies:
+    babel-runtime "^6.23.0"
+
 has-ansi@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/has-ansi/-/has-ansi-2.0.0.tgz#34f5049ce1ecdf2b0649af3ef24e45ed35416d91"
@@ -2633,6 +2653,12 @@ komento@^0.29.0:
 kount@^0.10.0:
   version "0.10.0"
   resolved "https://registry.yarnpkg.com/kount/-/kount-0.10.0.tgz#92f6dc18a5c8e8844e29a93aec268b58ad92f53b"
+  dependencies:
+    babel-runtime "^6.23.0"
+
+kount@^0.11.0:
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/kount/-/kount-0.11.0.tgz#99775ed4a1b096e8ef5547f60d63e59f1d3e5b84"
   dependencies:
     babel-runtime "^6.23.0"
 
@@ -3524,6 +3550,14 @@ protype@^0.21.0:
     cemento "^0.15.0"
     harden "^0.21.0"
 
+protype@^0.22.0:
+  version "0.22.0"
+  resolved "https://registry.yarnpkg.com/protype/-/protype-0.22.0.tgz#b4929f8394747e031f92cfd08e9ec6ec8f6b85c1"
+  dependencies:
+    babel-runtime "^6.23.0"
+    cemento "^0.16.0"
+    harden "^0.22.0"
+
 prr@~0.0.0:
   version "0.0.0"
   resolved "https://registry.yarnpkg.com/prr/-/prr-0.0.0.tgz#1a84b85908325501411853d0081ee3fa86e2926a"
@@ -3659,14 +3693,14 @@ read-pkg@^1.0.0:
     string_decoder "~0.10.x"
 
 readable-stream@^2.0.1, readable-stream@^2.0.2, readable-stream@^2.0.5, readable-stream@^2.0.6, readable-stream@^2.1.4, readable-stream@^2.1.5, readable-stream@^2.2.6:
-  version "2.2.10"
-  resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-2.2.10.tgz#effe72bb7c884c0dd335e2379d526196d9d011ee"
+  version "2.2.11"
+  resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-2.2.11.tgz#0796b31f8d7688007ff0b93a8088d34aa17c0f72"
   dependencies:
     core-util-is "~1.0.0"
     inherits "~2.0.1"
     isarray "~1.0.0"
     process-nextick-args "~1.0.6"
-    safe-buffer "^5.0.1"
+    safe-buffer "~5.0.1"
     string_decoder "~1.0.0"
     util-deprecate "~1.0.1"
 
@@ -3892,9 +3926,9 @@ ripemd160@^2.0.0, ripemd160@^2.0.1:
     hash-base "^2.0.0"
     inherits "^2.0.1"
 
-safe-buffer@^5.0.1:
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/safe-buffer/-/safe-buffer-5.1.0.tgz#fe4c8460397f9eaaaa58e73be46273408a45e223"
+safe-buffer@^5.0.1, safe-buffer@~5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/safe-buffer/-/safe-buffer-5.0.1.tgz#d263ca54696cd8a306b5ca6551e92de57918fbe7"
 
 "semver@2 || 3 || 4 || 5", semver@^5.3.0:
   version "5.3.0"
@@ -4108,10 +4142,10 @@ string_decoder@^0.10.25, string_decoder@~0.10.x:
   resolved "https://registry.yarnpkg.com/string_decoder/-/string_decoder-0.10.31.tgz#62e203bc41766c6c28c9fc84301dab1c5310fa94"
 
 string_decoder@~1.0.0:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/string_decoder/-/string_decoder-1.0.1.tgz#62e200f039955a6810d8df0a33ffc0f013662d98"
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/string_decoder/-/string_decoder-1.0.2.tgz#b29e1f4e1125fa97a10382b8a533737b7491e179"
   dependencies:
-    safe-buffer "^5.0.1"
+    safe-buffer "~5.0.1"
 
 stringe@^0.3.0:
   version "0.3.0"
@@ -4287,6 +4321,12 @@ trim-right@^1.0.1:
 truly@^0.18.0:
   version "0.18.0"
   resolved "https://registry.yarnpkg.com/truly/-/truly-0.18.0.tgz#333c3f312083e31bbc601ccb95919ddafb14f4e3"
+  dependencies:
+    babel-runtime "^6.23.0"
+
+truly@^0.19.0:
+  version "0.19.0"
+  resolved "https://registry.yarnpkg.com/truly/-/truly-0.19.0.tgz#776080d30870549d62dcf258588287f403aa814e"
   dependencies:
     babel-runtime "^6.23.0"
 

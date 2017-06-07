@@ -62,7 +62,6 @@
 			"ntrprt": "ntrprt",
 			"protype": "protype",
 			"statis": "statis",
-			"transpher": "transpher",
 			"truly": "truly"
 		}
 	@end-include
@@ -79,7 +78,6 @@ const ngrave = require( "ngrave" );
 const ntrprt = require( "ntrprt" );
 const protype = require( "protype" );
 const statis = require( "statis" );
-const transpher = require( "transpher" );
 const truly = require( "truly" );
 
 const INHERITANCE = Symbol( "inheritance" );
@@ -174,8 +172,6 @@ const connect = function connect( ){
 			if( falzy( child ) || !protype( child, FUNCTION ) ){
 				throw new Error( "invalid child class" );
 			}
-
-			transpher( this, child, true );
 
 			ngrave( CHILD, this, child );
 
