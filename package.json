@@ -1,6 +1,6 @@
 {
   "name": "heredito",
-  "version": "0.35.0",
+  "version": "0.36.0",
   "description": "Extensive inheritance.",
   "main": "heredito.js",
   "support": "heredito.support.js",
@@ -52,7 +52,7 @@
     "reclas": "^0.13.0",
     "sepby": "^0.6.0",
     "shft": "^0.2.0",
-    "statis": "^0.14.0",
+    "statis": "^0.15.0",
     "truly": "^0.19.0",
     "wauker": "^0.16.0",
     "x10cv": "^0.9.0"
@@ -68,7 +68,7 @@
     "gulp-debug": "^3.1.0",
     "gulp-plumber": "^1.1.0",
     "gulp-rename": "^1.2.2",
-    "gulp-replace": "^0.5.4",
+    "gulp-replace": "^0.6.1",
     "gulp-sourcemaps": "^2.6.0",
     "source-map-loader": "^0.2.1",
     "webpack": "^3.0.0"
