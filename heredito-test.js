@@ -1,5 +1,6 @@
 
 const assert = require( "assert" );
+const diatom = require( "diatom" );
 const heredito = require( "./heredito.js" );
 
 let ClassA = function ClassA( ){ };
@@ -57,5 +58,16 @@ assert.equal( ClassC( ) instanceof ClassB, true, "should be true" );
 assert.equal( ClassC( ) instanceof ClassD, true, "should be true" );
 
 assert.equal( ClassC( ) instanceof ClassC, true, "should be true" );
+
+let Orange = diatom( "Orange" );
+let Apple = diatom( "Apple" );
+Orange = heredito( Orange, Apple );
+
+assert.equal( Orange( ) instanceof Apple, true, "should return true" );
+
+let Hello = diatom( "Hello" );
+Hello.prototype.initialize = function initialize( value ){ this.hi = value };
+
+assert.equal( Hello( "world" ).hi, "world", "should return 'world'" );
 
 console.log( "ok" );
