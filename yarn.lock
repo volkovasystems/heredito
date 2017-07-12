@@ -996,6 +996,16 @@ cagd@^0.2.0:
     wichevr "^0.10.0"
     zelf "^0.12.0"
 
+cagd@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/cagd/-/cagd-0.3.0.tgz#daface5f50005d559750a9d1106e32333d1cf16c"
+  dependencies:
+    babel-runtime "^6.23.0"
+    falzy "^0.20.0"
+    protype "^0.22.0"
+    wichevr "^0.13.0"
+    zelf "^0.12.0"
+
 calcify@^0.9.0:
   version "0.9.0"
   resolved "https://registry.yarnpkg.com/calcify/-/calcify-0.9.0.tgz#01fde8098943b1d203a01594faf168709864effe"
@@ -1329,8 +1339,8 @@ cryptiles@2.x.x:
     boom "2.x.x"
 
 crypto-browserify@^3.11.0:
-  version "3.11.0"
-  resolved "https://registry.yarnpkg.com/crypto-browserify/-/crypto-browserify-3.11.0.tgz#3652a0906ab9b2a7e0c3ce66a408e957a2485522"
+  version "3.11.1"
+  resolved "https://registry.yarnpkg.com/crypto-browserify/-/crypto-browserify-3.11.1.tgz#948945efc6757a400d6e5e5af47194d10064279f"
   dependencies:
     browserify-cipher "^1.0.0"
     browserify-sign "^4.0.0"
@@ -1749,20 +1759,19 @@ enhanced-resolve@^3.3.0:
     object-assign "^4.0.1"
     tapable "^0.2.5"
 
-ensnme@^0.7.0:
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/ensnme/-/ensnme-0.7.0.tgz#885ec29aa25e53a7aa859ef303ed1c034f30adbb"
+ensnme@^0.8.0:
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/ensnme/-/ensnme-0.8.0.tgz#c74853613c6881c5cd5789ffb70b088c55516323"
   dependencies:
     babel-runtime "^6.23.0"
-    cagd "^0.2.0"
-    depher "^0.35.0"
+    cagd "^0.3.0"
+    depher "^0.36.0"
     falzy "^0.20.0"
-    fname "^0.9.0"
-    kein "^0.26.0"
-    protype "^0.22.0"
-    shft "^0.2.0"
+    fname "^0.11.0"
+    kein "^0.28.0"
+    shft "^0.4.0"
     truly "^0.19.0"
-    wichevr "^0.10.0"
+    wichevr "^0.13.0"
 
 enyof@^0.10.0:
   version "0.10.0"
@@ -2761,10 +2770,10 @@ is-path-inside@^1.0.0:
     path-is-inside "^1.0.1"
 
 is-plain-object@^2.0.3:
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/is-plain-object/-/is-plain-object-2.0.3.tgz#c15bf3e4b66b62d72efaf2925848663ecbc619b6"
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/is-plain-object/-/is-plain-object-2.0.4.tgz#2c163b3fafb1b606d9d17928f05c2a1c38e07677"
   dependencies:
-    isobject "^3.0.0"
+    isobject "^3.0.1"
 
 is-posix-bracket@^0.1.0:
   version "0.1.1"
@@ -2820,7 +2829,7 @@ isobject@^2.0.0, isobject@^2.1.0:
   dependencies:
     isarray "1.0.0"
 
-isobject@^3.0.0:
+isobject@^3.0.0, isobject@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/isobject/-/isobject-3.0.1.tgz#4e431e92b11a9731636aa1f9c8d1ccbcfdab78df"
 
@@ -3334,15 +3343,15 @@ meto@^0.29.0:
     wichevr "^0.10.0"
     zelf "^0.12.0"
 
-metod@^0.11.0:
-  version "0.11.0"
-  resolved "https://registry.yarnpkg.com/metod/-/metod-0.11.0.tgz#083332cff4565af91d67a736633fa9c2066add8a"
+metod@^0.12.0:
+  version "0.12.0"
+  resolved "https://registry.yarnpkg.com/metod/-/metod-0.12.0.tgz#1d76d29f3d96bdf51ccf6e9330f5e56c55dbdf0b"
   dependencies:
     babel-runtime "^6.23.0"
-    een "^0.19.0"
-    ensnme "^0.7.0"
+    een "^0.21.0"
+    ensnme "^0.8.0"
     falzy "^0.20.0"
-    meton "^0.2.0"
+    meton "^0.3.0"
 
 meton@^0.2.0:
   version "0.2.0"
@@ -5119,9 +5128,9 @@ webpack-sources@^1.0.1:
     source-list-map "^2.0.0"
     source-map "~0.5.3"
 
-webpack@^3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/webpack/-/webpack-3.1.0.tgz#ac0675e500db835f9ab2369d29ba096f51ad0731"
+webpack@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/webpack/-/webpack-3.2.0.tgz#8b0cae0e1a9fd76bfbf0eab61a8c2ada848c312f"
   dependencies:
     acorn "^5.0.0"
     acorn-dynamic-import "^2.0.0"
@@ -5218,14 +5227,13 @@ wrtble@^0.6.0:
     dscrb "^0.5.0"
     zelf "^0.12.0"
 
-x10cv@^0.9.0:
-  version "0.9.0"
-  resolved "https://registry.yarnpkg.com/x10cv/-/x10cv-0.9.0.tgz#92e74692dc2e7256c2c049b9509800d31cbfa02c"
+x10cv@^0.10.0:
+  version "0.10.0"
+  resolved "https://registry.yarnpkg.com/x10cv/-/x10cv-0.10.0.tgz#c94e1870c12ccbe04ea57f3845293e14d604dec2"
   dependencies:
     babel-runtime "^6.23.0"
     falzy "^0.20.0"
-    mrkd "^0.8.0"
-    protype "^0.22.0"
+    mrkd "^0.9.0"
 
 xcavate@^0.1.0:
   version "0.1.0"
